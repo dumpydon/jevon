@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "jevon",
+  "main": "server/worker.ts",
+  "compatibility_date": "2026-10-02",
+  "compatibility_flags": ["nodejs_compat"],
+  "ratelimits": [
+    {
+      "name": "INFERENCE_RATE_LIMIT",
+      "namespace_id": "1007",
+      "simple": { "limit": 5, "period": 60 },
+    },
+  ],
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"],
+  },
+  "observability": { "enabled": true },
+}

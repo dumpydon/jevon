@@ -1,6 +1,7 @@
 import {
   ArrowUpRight,
   BatteryMedium,
+  Braces,
   Camera,
   CircleCheck,
   CircleMinus,
@@ -12,6 +13,7 @@ import {
   ShieldCheck,
   Smartphone,
   Star,
+  Timer,
   Zap,
 } from 'lucide-react';
 import type { AnalysisResult, AspectId } from '../lib/types';
@@ -53,7 +55,10 @@ export function AnalysisView({
             <Fingerprint size={17} />
             <h2>Customer signal</h2>
           </div>
-          <Badge tone="accent">Analyzed</Badge>
+          <Badge key={result.requestId} tone="positive">
+            <CircleCheck size={12} aria-hidden="true" />
+            Analyzed
+          </Badge>
         </div>
         <div className="signal-headline">
           <div>
@@ -174,13 +179,24 @@ export function AnalysisView({
         </div>
       </section>
       <div className="result-footer">
-        <span>
-          <span className="status-dot" />
-          {result.decisionCount} typed decisions · {duration(result.durationMs)}
-        </span>
-        <button className="button button-small button-secondary" onClick={onInspect}>
+        <div className="inference-status" role="group" aria-label="Analysis execution details">
+          <span className="inference-state">
+            <span className="status-dot" aria-hidden="true" />
+            Analysis complete
+          </span>
+          <span className="inference-metric" title="Typed decisions returned">
+            <strong>{result.decisionCount}</strong>
+            <span>decisions</span>
+          </span>
+          <span className="inference-metric inference-time" title="Measured analysis duration">
+            <Timer size={11} aria-hidden="true" />
+            <strong>{duration(result.durationMs)}</strong>
+          </span>
+        </div>
+        <button className="button button-small button-secondary inspect-button" onClick={onInspect}>
+          <Braces size={13} className="inspect-icon" aria-hidden="true" />
           Inspect decisions
-          <ArrowUpRight size={14} />
+          <ArrowUpRight size={13} className="inspect-arrow" aria-hidden="true" />
         </button>
       </div>
     </div>

@@ -1,6 +1,5 @@
 import {
   ArrowUpRight,
-  Braces,
   ChevronRight,
   Command,
   ExternalLink,
@@ -8,14 +7,13 @@ import {
   FlaskConical,
   Code2,
   Menu,
-  Radio,
-  ShieldCheck,
   X,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { getHealth } from './lib/browser';
 import { JEV_MODEL } from './lib/config';
 import type { HealthStatus } from './lib/types';
+import { AppFooter } from './components/AppFooter';
 import { BatchAnalyzer } from './features/BatchAnalyzer';
 import { Benchmark } from './features/Benchmark';
 import { DecisionLab } from './features/DecisionLab';
@@ -82,13 +80,6 @@ export default function App() {
     window.addEventListener('keydown', onEscape);
     return () => window.removeEventListener('keydown', onEscape);
   }, [mobileOpen]);
-  const state = health?.jevConfigured
-    ? 'Jev configured'
-    : health
-      ? 'Jev not configured'
-      : healthFailed
-        ? 'Server unavailable'
-        : 'Checking connection';
   function navigate(next: Page) {
     setPage(next);
     setMobileOpen(false);
@@ -151,22 +142,10 @@ export default function App() {
           <Logo />
           <div>
             <strong>Jevon</strong>
-            <span>Decision Intelligence</span>
+            <span>Powered by Jev</span>
           </div>
-          <span className="version-pill">v1</span>
         </a>
-        <div className="workspace-label">
-          <span className="workspace-avatar">
-            <Braces size={14} />
-          </span>
-          <div>
-            <strong>Feedback engine</strong>
-            <span>Local workspace</span>
-          </div>
-          <ChevronRight size={13} />
-        </div>
         <nav className="main-nav" aria-label="Main navigation">
-          <div className="nav-label">Workspace</div>
           {navigation.map(({ id, label, icon: Icon }) => (
             <a
               key={id}
@@ -184,31 +163,7 @@ export default function App() {
             </a>
           ))}
         </nav>
-        <div className="sidebar-principle">
-          <div className="principle-icon">
-            <ShieldCheck size={18} />
-          </div>
-          <strong>Decisions you can inspect.</strong>
-          <p>
-            Typed model outputs.
-            <br />
-            Explicit application rules.
-          </p>
-        </div>
         <div className="sidebar-bottom">
-          <div className={`system-status ${health?.jevConfigured ? 'system-ready' : ''}`}>
-            <div>
-              <Radio size={15} />
-              <span>System status</span>
-            </div>
-            <strong>
-              <span
-                className={`status-dot ${healthFailed || (health && !health.jevConfigured) ? 'status-warning' : !health ? 'status-pending' : ''}`}
-              />
-              {state}
-            </strong>
-            <code>{health?.model ?? JEV_MODEL}</code>
-          </div>
           <a
             className="github-link"
             href="https://github.com/dumpydon/jevon"
@@ -220,13 +175,13 @@ export default function App() {
             <ArrowUpRight size={14} />
           </a>
           <div className="sidebar-footer">
-            <span>Built around Jev System-One</span>
             <a
               href="https://www.typesafe.ai/"
               aria-label="TypeSafe AI website"
               target="_blank"
               rel="noreferrer"
             >
+              TypeSafe AI
               <ExternalLink size={12} />
             </a>
           </div>
@@ -240,16 +195,16 @@ export default function App() {
             <strong>{navigation.find((item) => item.id === page)?.label}</strong>
           </div>
           <div className="topbar-right">
-            <span className="privacy-note">
-              <ShieldCheck size={13} />
-              Server-side inference
-            </span>
-            <span className={`connection-indicator ${health?.jevConfigured ? 'connected' : ''}`}>
+            <span
+              className={`connection-indicator ${health?.jevConfigured ? 'connected' : ''}`}
+              title={health?.model ?? JEV_MODEL}
+              role="status"
+            >
               <span
                 className={`status-dot ${healthFailed || (health && !health.jevConfigured) ? 'status-warning' : !health ? 'status-pending' : ''}`}
               />
               {health?.jevConfigured
-                ? 'Ready'
+                ? 'Jev API Ready'
                 : health
                   ? 'Needs configuration'
                   : healthFailed
@@ -268,11 +223,8 @@ export default function App() {
           <div hidden={page !== 'benchmark'}>
             <Benchmark health={health} />
           </div>
-          <footer className="workspace-footer">
-            <span>AI Decision Engine for Customer Feedback</span>
-            <span>Semantic judgment. Deterministic action.</span>
-          </footer>
         </main>
+        <AppFooter />
       </div>
     </div>
   );

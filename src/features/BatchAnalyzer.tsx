@@ -1,9 +1,8 @@
 import {
   ArrowUpRight,
-  Check,
+  ChevronDown,
   Download,
   FileSpreadsheet,
-  Inbox,
   Square,
   UploadCloud,
 } from 'lucide-react';
@@ -14,7 +13,6 @@ import { DecisionInspector } from '../components/DecisionInspector';
 import {
   Badge,
   duration,
-  EmptyWorkspace,
   ErrorBanner,
   Metric,
   PageHeader,
@@ -139,11 +137,7 @@ export function BatchAnalyzer({ health }: { health: HealthStatus | null }) {
   }
   return (
     <>
-      <PageHeader
-        eyebrow="Workspace / Batch Analyzer"
-        title="Many reviews. One clear signal."
-        description="Validate a small dataset, analyze it with Jev, and inspect the aggregate."
-      >
+      <PageHeader title="Batch Analyzer" description="Analyze a few reviews and see the patterns.">
         <button className="button button-secondary button-small" onClick={downloadSample}>
           <Download size={14} />
           Sample CSV
@@ -154,7 +148,7 @@ export function BatchAnalyzer({ health }: { health: HealthStatus | null }) {
         <div className="panel-heading">
           <div className="heading-with-icon">
             <FileSpreadsheet size={17} />
-            <h2>Review dataset</h2>
+            <h2>Upload reviews</h2>
           </div>
           <Badge>Up to {LIMITS.maxReviews} reviews</Badge>
         </div>
@@ -179,8 +173,8 @@ export function BatchAnalyzer({ health }: { health: HealthStatus | null }) {
               <h3>{source || 'Drop a CSV file here'}</h3>
               <p>
                 {reviews.length
-                  ? `${plural(reviews.length, 'validated review')} · ready to preview`
-                  : `Comma-separated · ${LIMITS.maxCsvBytes / (1024 * 1024)} MB maximum`}
+                  ? `${plural(reviews.length, 'review')} ready`
+                  : `CSV · ${LIMITS.maxCsvBytes / (1024 * 1024)} MiB maximum`}
               </p>
             </div>
             <button
@@ -206,47 +200,56 @@ export function BatchAnalyzer({ health }: { health: HealthStatus | null }) {
               onChange={(event) => void loadFile(event.target.files?.[0])}
             />
           </div>
-          <div className="dataset-schema">
-            <span>
-              <code>review_text</code> required
-            </span>
-            <span>
-              <code>review_id</code>
-              <code>product</code>
-              <code>overall_rating</code> optional
-            </span>
+          <div className="dataset-tools">
             <button
               className="text-button"
               disabled={running || loadingFile}
               onClick={() => prepare(SAMPLE_REVIEWS, 'Bundled sample dataset')}
             >
-              Load sample dataset
+              Try sample reviews
               <ArrowUpRight size={13} />
             </button>
+            <details className="product-details dataset-help">
+              <summary>
+                CSV & analysis details
+                <ChevronDown size={14} />
+              </summary>
+              <div className="product-details-content dataset-schema">
+                <p>
+                  Include a <code>review_text</code> column. Optional columns:{' '}
+                  <code>review_id</code>, <code>product</code> and <code>overall_rating</code>.
+                </p>
+                <p>
+                  Up to {LIMITS.maxReviews} reviews, {LIMITS.maxCsvBytes / (1024 * 1024)} MiB per
+                  file. Jev handles {LIMITS.concurrency} reviews at a time, with at most one retry
+                  per review for a temporary upstream error.
+                </p>
+              </div>
+            </details>
           </div>
           {reviews.length > 0 && (
             <div className="dataset-preview appear">
-              <div className="section-title">
-                <h3>Preview & request budget</h3>
-                <Badge tone="accent">
-                  <Check size={11} />
-                  Validated
-                </Badge>
-              </div>
-              <div className="review-preview-list">
-                {reviews.slice(0, quantity).map((review, index) => (
-                  <div key={review.reviewId} className="review-preview">
-                    <span className="preview-index">{String(index + 1).padStart(2, '0')}</span>
-                    <div>
-                      <strong>
-                        {review.reviewId}
-                        <span>{review.product}</span>
-                      </strong>
-                      <p>{review.reviewText}</p>
+              <details className="product-details dataset-review-preview" open={items.length === 0}>
+                <summary>
+                  <span className="preview-title">Review preview</span>
+                  <Badge>{plural(reviews.length, 'review')} loaded</Badge>
+                  <ChevronDown size={14} />
+                </summary>
+                <div className="review-preview-list">
+                  {reviews.slice(0, quantity).map((review, index) => (
+                    <div key={review.reviewId} className="review-preview">
+                      <span className="preview-index">{String(index + 1).padStart(2, '0')}</span>
+                      <div>
+                        <strong>
+                          {review.reviewId}
+                          <span>{review.product}</span>
+                        </strong>
+                        <p>{review.reviewText}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </details>
               <div className="batch-run-actions">
                 <div className="batch-quantity">
                   <label htmlFor="batch-quantity">Analyze first</label>
@@ -265,10 +268,7 @@ export function BatchAnalyzer({ health }: { health: HealthStatus | null }) {
                   <span>of {reviews.length}</span>
                 </div>
                 <div>
-                  <span className="small muted">
-                    {plural(quantity, 'review analysis', 'review analyses')} · concurrency{' '}
-                    {LIMITS.concurrency}
-                  </span>
+                  <span className="small muted">{plural(quantity, 'Jev request')}</span>
                   <button
                     className="button button-primary"
                     disabled={running || !health?.jevConfigured}
@@ -285,13 +285,9 @@ export function BatchAnalyzer({ health }: { health: HealthStatus | null }) {
                   </button>
                 </div>
               </div>
-              <p className="request-note">
-                At most one retry per review for transient upstream errors.
-              </p>
               {health && !health.jevConfigured && (
                 <p className="configuration-note">
-                  Jev is not configured. The dataset can be previewed; analysis needs the server API
-                  key.
+                  Reviews are ready to preview. Connect Jev on the server to analyze them.
                 </p>
               )}
             </div>
@@ -303,7 +299,7 @@ export function BatchAnalyzer({ health }: { health: HealthStatus | null }) {
           {running && (
             <div className="batch-progress" role="status">
               <div>
-                <Running>Processing review decisions</Running>
+                <Running>Analyzing reviews</Running>
                 <span>
                   {items.length} / {total} complete
                 </span>
@@ -312,7 +308,7 @@ export function BatchAnalyzer({ health }: { health: HealthStatus | null }) {
                   onClick={() => abortRef.current?.abort()}
                 >
                   <Square size={11} />
-                  Cancel batch
+                  Cancel
                 </button>
               </div>
               <progress
@@ -320,49 +316,34 @@ export function BatchAnalyzer({ health }: { health: HealthStatus | null }) {
                 max={total || 1}
                 aria-label="Completed batch reviews"
               />
-              <p>
-                Up to {LIMITS.concurrency} requests at a time. Completed results are retained on
-                cancellation.
-              </p>
+              <p>Cancelling keeps completed results.</p>
             </div>
           )}
           {cancelled && (
             <div className="cancelled-note" role="status">
               <Square size={13} />
-              Batch cancelled. {plural(items.length, 'completed review')} retained. In-flight
-              requests may already have been processed.
+              Cancelled · {plural(items.length, 'completed review')} kept. Requests already sent may
+              still be processed.
             </div>
           )}
           <div className="metric-grid batch-metrics">
-            <Metric label="Completed reviews" value={`${items.length} / ${total}`} />
+            <Metric label="Processed" value={`${items.length} / ${total}`} />
             <Metric label="Successful" value={aggregate.successful} tone="accent" />
             <Metric
               label="Failed"
               value={aggregate.failed}
               tone={aggregate.failed ? 'warning' : undefined}
             />
-            <Metric label="Typed decisions" value={aggregate.totalDecisions} />
+            <Metric label="Decisions" value={aggregate.totalDecisions} />
             <Metric
-              label="Processing time"
+              label="Duration"
               value={result ? duration(result.durationMs) : running ? 'Running' : '—'}
             />
           </div>
           {aggregate.successful > 0 && <BatchDashboard aggregate={aggregate} />}
           <ReviewTable items={items} running={running} onInspect={setInspected} />
         </div>
-      ) : (
-        <EmptyWorkspace
-          icon={<Inbox size={26} />}
-          title="Your dataset, made actionable."
-          description="Upload a CSV or load the bundled sample. Preview the reviews and choose how many to analyze before any Jev requests are sent."
-        >
-          <div className="empty-badges">
-            <Badge>{LIMITS.maxReviews}-review limit</Badge>
-            <Badge>Partial failures handled</Badge>
-            <Badge>Inspectable results</Badge>
-          </div>
-        </EmptyWorkspace>
-      )}
+      ) : null}
       {inspected && <DecisionInspector result={inspected} onClose={() => setInspected(null)} />}
     </>
   );

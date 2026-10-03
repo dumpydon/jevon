@@ -30,7 +30,7 @@ export function ReviewTable({
   return (
     <section className="panel review-table-panel">
       <div className="panel-heading">
-        <h2>Review decisions</h2>
+        <h2>Review results</h2>
         <span className="small muted">{visibleItems.length} shown</span>
       </div>
       <div className="table-toolbar">
@@ -78,9 +78,9 @@ export function ReviewTable({
               <th>Review</th>
               <th>Product</th>
               <th>Sentiment</th>
-              <th>Primary topic</th>
+              <th>Topic</th>
               <th>Churn risk</th>
-              <th>Escalation</th>
+              <th>Human review</th>
               <th>Status</th>
               <th>
                 <span className="sr-only">Inspect</span>
@@ -115,7 +115,7 @@ export function ReviewTable({
                     <td>{item.result.signal.churnRisk.toFixed(1)} / 4</td>
                     <td>
                       {item.result.signal.escalationProbability >= THRESHOLDS.escalation ? (
-                        <Badge tone="warning">Candidate</Badge>
+                        <Badge tone="warning">Suggested</Badge>
                       ) : (
                         '—'
                       )}
@@ -128,14 +128,15 @@ export function ReviewTable({
                     </td>
                     <td>
                       <button
-                        className="icon-button"
+                        className="text-button review-table-action"
                         aria-label={`Inspect decisions for ${item.review.reviewId}`}
                         onClick={(event) => {
                           event.stopPropagation();
                           onInspect(item.result);
                         }}
                       >
-                        <ArrowUpRight size={15} />
+                        Inspect
+                        <ArrowUpRight size={14} />
                       </button>
                     </td>
                   </>

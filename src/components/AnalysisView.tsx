@@ -4,7 +4,6 @@ import {
   Braces,
   Camera,
   CircleCheck,
-  CircleMinus,
   Cpu,
   Diamond,
   DollarSign,
@@ -13,7 +12,6 @@ import {
   ShieldCheck,
   Smartphone,
   Star,
-  Timer,
   Zap,
 } from 'lucide-react';
 import type { AnalysisResult, AspectId } from '../lib/types';
@@ -44,27 +42,39 @@ export function AnalysisView({
 }) {
   const { signal } = result;
   const activeActions = result.actions.filter((action) => action.triggered);
+  const mentionedAspects = result.aspects.filter((aspect) => aspect.mentioned);
+  const absentAspects = result.aspects.filter((aspect) => !aspect.mentioned);
   return (
     <div className="analysis-view appear">
-      <span className="sr-only" role="status">
-        Analysis complete. {result.decisionCount} real Jev decisions returned.
-      </span>
+      <section className="analysis-summary" aria-label="Analysis summary" role="status">
+        <div className="analysis-summary-state">
+          <CircleCheck size={18} aria-hidden="true" />
+          <span>Analysis complete</span>
+        </div>
+        <div className="analysis-summary-metrics">
+          <div className="analysis-summary-metric">
+            <strong>{result.decisionCount}</strong>
+            <span>decisions</span>
+          </div>
+          <div className="analysis-summary-metric">
+            <strong>{duration(result.durationMs)}</strong>
+            <span>duration</span>
+          </div>
+        </div>
+      </section>
       <section className="panel signal-panel">
         <div className="panel-heading">
           <div className="heading-with-icon">
             <Fingerprint size={17} />
             <h2>Customer signal</h2>
           </div>
-          <Badge key={result.requestId} tone="positive">
-            <CircleCheck size={12} aria-hidden="true" />
-            Analyzed
-          </Badge>
         </div>
         <div className="signal-headline">
           <div>
             <span className="field-label">Primary topic</span>
-            <strong>{topicLabel(signal.primaryTopic)}</strong>
-            <small>{percent(signal.topicConfidence)} choice confidence</small>
+            <strong title={`${percent(signal.topicConfidence)} confidence`}>
+              {topicLabel(signal.primaryTopic)}
+            </strong>
           </div>
           <Badge
             tone={
@@ -121,7 +131,7 @@ export function AnalysisView({
           <span>
             {activeActions.length
               ? activeActions.map((action) => action.label).join(' · ')
-              : 'No operational action triggered'}
+              : 'No action triggered'}
           </span>
         </div>
       </section>
@@ -132,67 +142,64 @@ export function AnalysisView({
             <h2>Aspect analysis</h2>
           </div>
           <span className="muted small">
-            {result.aspects.filter((aspect) => aspect.mentioned).length} of 7 mentioned
+            {mentionedAspects.length} of {result.aspects.length} mentioned
           </span>
         </div>
         <div className="aspect-list">
-          {result.aspects.map((aspect) => (
-            <div
-              key={aspect.id}
-              className={`aspect-row ${!aspect.mentioned ? 'aspect-unmentioned' : ''}`}
-            >
+          {mentionedAspects.map((aspect) => (
+            <div key={aspect.id} className="aspect-row aspect-mentioned">
               <div className="aspect-name">
                 <AspectIcon id={aspect.id} />
                 <div>
                   <strong>{aspect.label}</strong>
-                  <small>{percent(aspect.mentionProbability)} mention probability</small>
                 </div>
               </div>
-              {aspect.mentioned && aspect.rating !== null ? (
+              {aspect.rating !== null ? (
                 <div className="aspect-result">
                   <div className="rating">
                     <Star size={12} fill="currentColor" />
                     <strong>{aspect.rating.toFixed(1)}</strong>
                     <span>/ 5</span>
                   </div>
-                  <small>
-                    {aspect.satisfactionLabel}
-                    {aspect.confidence !== null && (
-                      <span className="aspect-score-confidence">
-                        {' '}
-                        · {percent(aspect.confidence)} confidence
-                      </span>
-                    )}
-                  </small>
+                  <small>{aspect.satisfactionLabel}</small>
                 </div>
               ) : (
-                <div className="not-mentioned">
-                  <CircleMinus size={13} />
-                  Not mentioned
-                </div>
+                <span className="muted">Rating unavailable</span>
               )}
             </div>
           ))}
         </div>
-        <div className="panel-note">
-          Ratings shown when mention probability ≥ {THRESHOLDS.aspectMention.toFixed(2)}.
-        </div>
+        {absentAspects.length > 0 && (
+          <div className="aspect-absent-list" role="group" aria-label="Not mentioned">
+            <span className="aspect-absent-heading">Not mentioned</span>
+            <div className="aspect-absent-items">
+              {absentAspects.map((aspect) => (
+                <span className="aspect-absent-item" key={aspect.id}>
+                  <AspectIcon id={aspect.id} size={15} />
+                  <span>{aspect.label}</span>
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+        <details className="aspect-detail-disclosure">
+          <summary>View probabilities</summary>
+          <dl className="aspect-detail-list">
+            {result.aspects.map((aspect) => (
+              <div key={aspect.id}>
+                <dt>{aspect.label}</dt>
+                <dd>
+                  <span>{percent(aspect.mentionProbability)} mentioned</span>
+                  {aspect.confidence !== null && (
+                    <span>{percent(aspect.confidence)} rating confidence</span>
+                  )}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </details>
       </section>
       <div className="result-footer">
-        <div className="inference-status" role="group" aria-label="Analysis execution details">
-          <span className="inference-state">
-            <span className="status-dot" aria-hidden="true" />
-            Analysis complete
-          </span>
-          <span className="inference-metric" title="Typed decisions returned">
-            <strong>{result.decisionCount}</strong>
-            <span>decisions</span>
-          </span>
-          <span className="inference-metric inference-time" title="Measured analysis duration">
-            <Timer size={11} aria-hidden="true" />
-            <strong>{duration(result.durationMs)}</strong>
-          </span>
-        </div>
         <button className="button button-small button-secondary inspect-button" onClick={onInspect}>
           <Braces size={13} className="inspect-icon" aria-hidden="true" />
           Inspect decisions

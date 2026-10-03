@@ -1,14 +1,19 @@
 import { Check, ChevronDown, Copy, Layers3, X } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import { useEffect, useId, useRef, useState } from 'react';
-import type { AnalysisResult, DecisionTrace } from '../lib/types';
-import { Badge, duration, percent } from './ui';
+import type {
+  AnalysisResult,
+  AspectDecision,
+  DecisionTrace,
+  DeterministicAction,
+} from '../lib/types';
+import { Badge, duration, percent, topicLabel } from './ui';
 
 function Trace({ trace }: { trace: DecisionTrace }) {
   const { decision } = trace;
   return (
-    <details className="trace" open>
-      <summary>
+    <article className="trace">
+      <header className="inspector-technical-heading">
         <div>
           <span className="trace-type">
             {decision.type === 'noul' ? 'N' : decision.type === 'score' ? 'S' : 'C'}
@@ -17,13 +22,12 @@ function Trace({ trace }: { trace: DecisionTrace }) {
         </div>
         <span className="trace-summary">
           {decision.type === 'noul'
-            ? percent(decision.noul)
+            ? decision.noul.toFixed(4)
             : decision.type === 'score'
-              ? `${decision.score.toFixed(2)} / 4`
+              ? `${decision.score.toFixed(4)} / 4`
               : decision.choice}
-          <ChevronDown size={14} />
         </span>
-      </summary>
+      </header>
       <div className="trace-body">
         <div className="trace-facts">
           <Badge>
@@ -35,12 +39,12 @@ function Trace({ trace }: { trace: DecisionTrace }) {
           </Badge>
           {decision.type !== 'noul' && (
             <span>
-              Confidence <strong>{percent(decision.confidence)}</strong>
+              Confidence <strong>{decision.confidence.toFixed(4)}</strong>
             </span>
           )}
           {trace.threshold !== undefined && (
             <span>
-              Threshold <strong>{trace.threshold.toFixed(2)}</strong>
+              Threshold <strong>{trace.threshold.toFixed(4)}</strong>
             </span>
           )}
           {trace.accepted !== undefined && (
@@ -53,7 +57,7 @@ function Trace({ trace }: { trace: DecisionTrace }) {
           )}
           {trace.mappedRating !== undefined && (
             <span>
-              Mapped rating <strong>{trace.mappedRating.toFixed(2)} / 5</strong>
+              Mapped rating <strong>{trace.mappedRating.toFixed(4)} / 5</strong>
             </span>
           )}
         </div>
@@ -83,7 +87,103 @@ function Trace({ trace }: { trace: DecisionTrace }) {
           </div>
         )}
       </div>
-    </details>
+    </article>
+  );
+}
+
+function AspectSummary({ aspect, traces }: { aspect: AspectDecision; traces: DecisionTrace[] }) {
+  return (
+    <article className={`inspector-aspect ${aspect.mentioned ? 'is-mentioned' : 'is-absent'}`}>
+      <div className="inspector-aspect-heading">
+        <h4>{aspect.label}</h4>
+        <Badge tone={aspect.mentioned ? 'accent' : 'neutral'}>
+          {aspect.mentioned ? 'Mentioned' : 'Not mentioned'}
+        </Badge>
+      </div>
+      <div className="inspector-aspect-values">
+        <div className="inspector-value">
+          <span>Mention chance</span>
+          <strong>{percent(aspect.mentionProbability)}</strong>
+        </div>
+        <div className="inspector-value">
+          <span>Satisfaction</span>
+          <strong>
+            {aspect.rating === null ? '—' : aspect.rating.toFixed(1)}
+            {aspect.rating !== null && <small> / 5</small>}
+          </strong>
+          {aspect.confidence !== null && <span>{percent(aspect.confidence)} confidence</span>}
+        </div>
+      </div>
+      <p className={`inspector-gate ${aspect.mentioned ? 'text-accent' : ''}`}>
+        {aspect.mentioned ? (
+          <>
+            <Check size={14} aria-hidden="true" /> Used in result
+          </>
+        ) : (
+          'Rating hidden because this aspect is not mentioned.'
+        )}
+      </p>
+      <details className="inspector-details">
+        <summary>
+          View details <ChevronDown size={15} aria-hidden="true" />
+        </summary>
+        <div className="traces">
+          {traces.map((trace) => (
+            <Trace key={trace.id} trace={trace} />
+          ))}
+        </div>
+      </details>
+    </article>
+  );
+}
+
+function OperationalSummary({
+  label,
+  value,
+  confidence,
+  trace,
+  action,
+  noAction,
+}: {
+  label: string;
+  value: string;
+  confidence?: number;
+  trace?: DecisionTrace;
+  action?: DeterministicAction;
+  noAction?: string;
+}) {
+  return (
+    <article className="inspector-operation">
+      <div className="inspector-operation-heading">
+        <h4>{label}</h4>
+        <div className="inspector-operation-value">
+          <strong>{value}</strong>
+          {confidence !== undefined && <span>{percent(confidence)} confidence</span>}
+        </div>
+      </div>
+      {action && (
+        <p className="inspector-operation-note">
+          {action.triggered ? <Badge tone="warning">{action.label}</Badge> : noAction}
+        </p>
+      )}
+      {trace && (
+        <details className="inspector-details">
+          <summary>
+            View details <ChevronDown size={15} aria-hidden="true" />
+          </summary>
+          <Trace trace={trace} />
+          {action && (
+            <div className="inspector-rule">
+              <span>{action.triggered ? 'Action triggered' : 'Action not triggered'}</span>
+              <code>{action.rule}</code>
+              <span>
+                Observed {action.value.toFixed(4)} · threshold {action.threshold.toFixed(4)}
+              </span>
+            </div>
+          )}
+        </details>
+      )}
+    </article>
   );
 }
 
@@ -99,6 +199,9 @@ export function DecisionInspector({
   const closeRef = useRef<HTMLButtonElement>(null);
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState(false);
+  const traceFor = (traceId: string) => result.traces.find((trace) => trace.id === traceId);
+  const actionFor = (actionId: DeterministicAction['id']) =>
+    result.actions.find((action) => action.id === actionId);
   useEffect(() => {
     const previousFocus =
       document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -108,9 +211,11 @@ export function DecisionInspector({
     const keyboard = (event: KeyboardEvent) => {
       if (event.key === 'Escape') onClose();
       if (event.key !== 'Tab') return;
-      const nodes = dialogRef.current?.querySelectorAll<HTMLElement>(
-        'button, a[href], summary, input, textarea, select, [tabindex="0"]',
-      );
+      const nodes = Array.from(
+        dialogRef.current?.querySelectorAll<HTMLElement>(
+          'button, a[href], summary, input, textarea, select, [tabindex="0"]',
+        ) ?? [],
+      ).filter((node) => !node.matches(':disabled') && node.getClientRects().length > 0);
       if (!nodes?.length) return;
       const first = nodes[0],
         last = nodes[nodes.length - 1];
@@ -157,7 +262,6 @@ export function DecisionInspector({
             <Layers3 size={20} />
           </div>
           <div>
-            <div className="eyebrow">Model judgment → application rules</div>
             <h2 id={id}>Decision Inspector</h2>
           </div>
           <button
@@ -170,92 +274,138 @@ export function DecisionInspector({
           </button>
         </header>
         <div className="dialog-content">
-          <div className="inspector-metadata">
-            <Badge tone="accent">Real Jev response</Badge>
-            <span>{result.model}</span>
-            <span>{result.decisionCount} decisions</span>
-            <span>{duration(result.durationMs)}</span>
+          <div className="inspector-overview">
+            <span>
+              {result.decisionCount} decisions · {duration(result.durationMs)}
+            </span>
+            <button className="button button-small button-secondary" onClick={copy}>
+              {copied ? <Check size={14} /> : <Copy size={14} />}
+              {copied ? 'JSON copied' : 'Copy JSON'}
+            </button>
           </div>
-          <section className="inspector-section">
-            <div className="section-title">
-              <h3>Input state</h3>
-              <span className="mono">reviewText</span>
-            </div>
-            <blockquote className="input-state">{result.review.reviewText}</blockquote>
-            <p className="section-note">All decisions evaluate this one shared semantic state.</p>
-          </section>
-          <section className="inspector-section">
-            <div className="section-title">
-              <h3>Typed decisions</h3>
-              <span className="muted">{result.traces.length} returned</span>
-            </div>
-            <p className="section-note">
-              Noul returns a probability. Score uses 0–4; satisfaction maps to 1–5 by adding 1.
-              Distributions below are returned by Jev.
+          {copyError && (
+            <p role="status" className="text-warning">
+              Clipboard access is unavailable in this browser.
             </p>
-            <div className="traces">
-              {result.traces.map((trace) => (
-                <Trace key={trace.id} trace={trace} />
+          )}
+          <section className="inspector-section">
+            <div className="section-title">
+              <h3>Aspect decisions</h3>
+            </div>
+            <div className="inspector-aspects">
+              {result.aspects.map((aspect) => (
+                <AspectSummary
+                  key={aspect.id}
+                  aspect={aspect}
+                  traces={result.traces.filter(
+                    (trace) =>
+                      trace.id === `${aspect.id}_mentioned` ||
+                      trace.id === `${aspect.id}_satisfaction`,
+                  )}
+                />
               ))}
             </div>
           </section>
           <section className="inspector-section">
             <div className="section-title">
-              <h3>Deterministic actions</h3>
-              <Badge>Application layer</Badge>
+              <h3>Customer signal</h3>
             </div>
-            <div className="inspector-actions">
-              {result.actions.map((action) => (
-                <div key={action.id}>
-                  <div>
-                    <strong>{action.label}</strong>
-                    <Badge tone={action.triggered ? 'warning' : 'neutral'}>
-                      {action.triggered ? 'Triggered' : 'Not triggered'}
-                    </Badge>
-                  </div>
-                  <code>{action.rule}</code>
-                  <p>
-                    Observed {action.value.toFixed(2)} · threshold {action.threshold.toFixed(2)}
-                  </p>
+            <div className="inspector-operational">
+              <OperationalSummary
+                label="Sentiment"
+                value={result.signal.sentiment}
+                confidence={result.signal.sentimentConfidence}
+                trace={traceFor('overall_sentiment')}
+              />
+              <OperationalSummary
+                label="Main topic"
+                value={topicLabel(result.signal.primaryTopic)}
+                confidence={result.signal.topicConfidence}
+                trace={traceFor('primary_topic')}
+              />
+              <OperationalSummary
+                label="Urgency"
+                value={`${result.signal.urgency.toFixed(1)} / 4`}
+                confidence={result.signal.urgencyConfidence}
+                trace={traceFor('urgency')}
+                action={actionFor('urgent')}
+                noAction="No urgent follow-up flagged."
+              />
+              <OperationalSummary
+                label="Churn risk"
+                value={`${result.signal.churnRisk.toFixed(1)} / 4`}
+                confidence={result.signal.churnConfidence}
+                trace={traceFor('churn_risk')}
+                action={actionFor('retention')}
+                noAction="No retention follow-up flagged."
+              />
+              <OperationalSummary
+                label="Escalation chance"
+                value={percent(result.signal.escalationProbability)}
+                trace={traceFor('escalation_need')}
+                action={actionFor('escalate')}
+                noAction="No escalation flagged."
+              />
+            </div>
+          </section>
+          <section className="inspector-section">
+            <details className="inspector-details inspector-feedback">
+              <summary>
+                Customer feedback <ChevronDown size={15} aria-hidden="true" />
+              </summary>
+              <blockquote className="input-state">{result.review.reviewText}</blockquote>
+              <dl className="metadata-grid">
+                <div>
+                  <dt>Review ID</dt>
+                  <dd>{result.review.reviewId}</dd>
                 </div>
-              ))}
-            </div>
-          </section>
-          <section className="inspector-section">
-            <div className="section-title">
-              <h3>Response metadata</h3>
-              <button className="button button-small button-secondary" onClick={copy}>
-                {copied ? <Check size={14} /> : <Copy size={14} />}
-                {copied ? 'JSON copied' : 'Copy response JSON'}
-              </button>
-            </div>
-            {copyError && (
-              <p role="status" className="text-warning">
-                Clipboard access is unavailable in this browser.
-              </p>
-            )}
-            <dl className="metadata-grid">
-              <div>
-                <dt>Request ID</dt>
-                <dd className="mono">{result.requestId}</dd>
-              </div>
-              <div>
-                <dt>Analyzed at</dt>
-                <dd>{new Date(result.analyzedAt).toLocaleString()}</dd>
-              </div>
-              <div>
-                <dt>Input tokens</dt>
-                <dd>{result.usage.inputTokens}</dd>
-              </div>
-              <div>
-                <dt>Output tokens</dt>
-                <dd>{result.usage.outputTokens}</dd>
-              </div>
-            </dl>
+                <div>
+                  <dt>Product</dt>
+                  <dd>{result.review.product}</dd>
+                </div>
+                {result.review.overallRating !== undefined && (
+                  <div>
+                    <dt>Original rating</dt>
+                    <dd>{result.review.overallRating} / 5</dd>
+                  </div>
+                )}
+              </dl>
+            </details>
+            <details className="inspector-details inspector-response">
+              <summary>
+                Response details <ChevronDown size={15} aria-hidden="true" />
+              </summary>
+              <dl className="metadata-grid">
+                <div>
+                  <dt>Model</dt>
+                  <dd>{result.model}</dd>
+                </div>
+                <div>
+                  <dt>Source</dt>
+                  <dd>{result.source}</dd>
+                </div>
+                <div>
+                  <dt>Request ID</dt>
+                  <dd className="mono">{result.requestId}</dd>
+                </div>
+                <div>
+                  <dt>Analyzed at</dt>
+                  <dd>{new Date(result.analyzedAt).toLocaleString()}</dd>
+                </div>
+                <div>
+                  <dt>Input tokens</dt>
+                  <dd>{result.usage.inputTokens}</dd>
+                </div>
+                <div>
+                  <dt>Output tokens</dt>
+                  <dd>{result.usage.outputTokens}</dd>
+                </div>
+              </dl>
+            </details>
           </section>
         </div>
         <footer className="dialog-footer">
-          <span>Semantic decisions by Jev. Actions by explicit rules.</span>
+          <span>Decisions by Jev</span>
           <button className="button button-small button-secondary" onClick={onClose}>
             Close inspector
           </button>

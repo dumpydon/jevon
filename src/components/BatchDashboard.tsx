@@ -1,3 +1,4 @@
+import { ChevronDown } from 'lucide-react';
 import { AspectIcon } from './AnalysisView';
 import { Badge, plural } from './ui';
 import type { BatchAggregate } from '../lib/types';
@@ -7,12 +8,15 @@ export function BatchDashboard({ aggregate }: { aggregate: BatchAggregate }) {
     <div className="batch-dashboard">
       <section className="panel aggregate-aspects">
         <div className="panel-heading">
-          <h2>Aspect satisfaction</h2>
-          <span className="small muted">Average · 1–5</span>
+          <h2>Aspect ratings</h2>
+          <span className="small muted">Average / 5</span>
         </div>
         <div className="aggregate-bars">
           {aggregate.aspects.map((aspect) => (
-            <div key={aspect.id} className="aggregate-row">
+            <div
+              key={aspect.id}
+              className={`aggregate-row ${aspect.mentionCount === 0 ? 'aggregate-row-muted' : ''}`}
+            >
               <div className="aggregate-label">
                 <AspectIcon id={aspect.id} size={14} />
                 <strong>{aspect.label}</strong>
@@ -31,10 +35,16 @@ export function BatchDashboard({ aggregate }: { aggregate: BatchAggregate }) {
             </div>
           ))}
         </div>
-        <div className="panel-note">
-          Only mentioned aspects count. Percentages use{' '}
-          {plural(aggregate.successful, 'successful review')}.
-        </div>
+        <details className="product-details aggregate-details">
+          <summary>
+            How averages work
+            <ChevronDown size={14} />
+          </summary>
+          <div className="product-details-content">
+            Only mentioned aspects count. Percentages use{' '}
+            {plural(aggregate.successful, 'successful review')}.
+          </div>
+        </details>
       </section>
       <section className="panel aggregate-signal">
         <div className="panel-heading">
@@ -84,7 +94,7 @@ export function BatchDashboard({ aggregate }: { aggregate: BatchAggregate }) {
             </strong>
           </div>
           <div>
-            <span>Escalation candidates</span>
+            <span>Human review</span>
             <strong>
               {aggregate.escalationCount}
               <small> {aggregate.escalationCount === 1 ? 'review' : 'reviews'}</small>

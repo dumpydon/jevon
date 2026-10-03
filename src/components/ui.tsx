@@ -17,7 +17,7 @@ export function PageHeader({
   description,
   children,
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   description: string;
   children?: ReactNode;
@@ -25,7 +25,7 @@ export function PageHeader({
   return (
     <header className="page-header">
       <div>
-        <div className="eyebrow">{eyebrow}</div>
+        {eyebrow && <div className="eyebrow">{eyebrow}</div>}
         <h1>{title}</h1>
         <p>{description}</p>
       </div>

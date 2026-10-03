@@ -1,7 +1,8 @@
-import { Braces, CircleDot, Command, Play, RotateCcw, Sparkles } from 'lucide-react';
+import { CircleDot, Command, Play, RotateCcw, Sparkles } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { AnalysisView } from '../components/AnalysisView';
 import { DecisionInspector } from '../components/DecisionInspector';
+import { PointCloudCube } from '../components/PointCloudCube';
 import { ErrorBanner, PageHeader, Running } from '../components/ui';
 import { analyzeReview, safeError } from '../lib/browser';
 import { LIMITS } from '../lib/config';
@@ -168,21 +169,7 @@ export function DecisionLab({ health }: { health: HealthStatus | null }) {
                 </div>
               </div>
               <div className="awaiting-visual" aria-hidden="true">
-                <div className="visual-node">
-                  <Braces size={23} />
-                </div>
-                <div className="connector-line" />
-                <div className="visual-decisions">
-                  <span>N</span>
-                  <span>S</span>
-                  <span>C</span>
-                </div>
-                <div className="connector-line" />
-                <div className="visual-signal">
-                  <span />
-                  <span />
-                  <span />
-                </div>
+                <PointCloudCube loading={running} />
               </div>
               <div className="placeholder-copy lab-empty-copy">
                 <h3>What stands out?</h3>

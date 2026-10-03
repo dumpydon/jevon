@@ -21,35 +21,31 @@ The interface exposes both model judgment and the rules that turn it into an act
 
 ```mermaid
 flowchart LR
-  U[Customer feedback] --> UI[React + Vite]
-  UI --> API[Hono server API]
-  API --> V[Validated input]
-  V --> A[Jev adapter]
-  A --> J[TypeSafe Jev<br/>Shared state · 19 typed questions]
-  J --> N[Runtime validation<br/>Normalized decisions]
-  N --> R[Confidence gates<br/>Deterministic rules]
-  R --> API
-  API --> UI
+  UI[React + Vite + TypeScript] --> API[Python + FastAPI]
+  API --> SDK[Official TypeSafe Python SDK]
+  SDK --> J[Jev System-One<br/>One shared state · 19 typed questions]
+  J --> N[Validate + normalize]
+  N --> R[Mention gates + deterministic rules]
+  R --> UI
 ```
 
-The same Hono API runs in the local Node.js server and the Cloudflare Worker. The browser calls `/api/*`; the SDK and API key stay on the server. The UI consumes application DTOs rather than TypeSafe SDK response types. Results and benchmark history live in browser session memory; there is no database.
+Jevon intentionally stays small: five backend modules, ordinary Python functions and bounded asyncio tasks. No database, persistence, job infrastructure or extra model provider. The interesting part is the typed Jev decisions and the rules that consume them.
 
-| Module                               | Responsibility                                                             |
-| ------------------------------------ | -------------------------------------------------------------------------- |
-| `src/lib/jev/questions.ts`           | Shared-state question definitions and scoring rubrics                      |
-| `src/lib/jev/client.ts`              | Real SDK call, deadlines, bounded retry, safe provider errors              |
-| `src/lib/jev/normalize.ts`           | Zod validation, schema/rubric checks, internal DTOs and decision traces    |
-| `src/lib/decisions/`                 | Pure satisfaction mapping, action rules and successful-result aggregation  |
-| `src/lib/config.ts`                  | Model, thresholds and conservative limits                                  |
-| `src/lib/csv.ts`                     | CSV parsing and validation before inference                                |
-| `src/server/batch.ts`                | Two-worker execution, partial failures, progress and cancellation          |
-| `src/lib/benchmark.ts`               | Pure agreement scoring against only declared fixture expectations          |
-| `server/api.ts`                      | Input validation, JSON/NDJSON routes, request IDs and safe error responses |
-| `server/worker.ts` / `server/dev.ts` | Cloudflare production entry / Node.js local entry                          |
+| Module                 | Responsibility                                                                                   |
+| ---------------------- | ------------------------------------------------------------------------------------------------ |
+| `backend/main.py`      | Four FastAPI routes, request limits, disconnect cancellation, CORS and safe errors               |
+| `backend/jev.py`       | Exact question definitions, official async SDK, strict normalization, deadlines and retry policy |
+| `backend/models.py`    | Pydantic input/output models with the existing camelCase JSON contract                           |
+| `backend/decisions.py` | Satisfaction mapping, thresholds, actions, aggregation and fixture agreement                     |
+| `backend/batch.py`     | At most two asyncio tasks, streamed progress, partial failures and cancellation                  |
+
+`backend/evaluation.json` contains the same seven original evaluation inputs shown in the frontend. `backend/verify_jev.py` is an optional manual integration check, outside the runtime path. Tests retain deterministic contracts captured from the previous backend; they are not a production fallback.
+
+The browser continues calling `/api/*` locally through Vite's proxy to port 8000. Production uses a public `VITE_API_BASE_URL`. The SDK and `TYPESAFE_API_KEY` stay in Python. CSV parsing stays in `src/lib/csv.ts`; the existing browser aggregation function remains for partial/cancelled results. Components, charts, typography, theme and navigation are unchanged. Results and history remain browser memory.
 
 ## Decision model
 
-This build uses the official **`@typesafe-ai/sdk` 0.6.0**, resolved by `package-lock.json`, and explicitly requests **`jev-1.13.0`**. Each review makes one `TypeSafeClient.systemOne({ model, state, questions }, { signal })` call to `POST https://api.typesafe.ai/v1/systemone`. The question builders and output semantics follow the [official JavaScript SDK](https://docs.typesafe.ai/sdk/javascript) and [TypeSafe API reference](https://docs.typesafe.ai/api).
+This build pins the official **`typesafe-sdk==0.7.2`** package (`typesafe_sdk`) and requests **`jev-1.13.0`**. Each review uses `AsyncTypeSafeClient.system_one(state=..., questions=...)` with `Noul`, `Score` and `Choice` definitions over one shared state. The installed async SDK and raw response types were inspected against the [official Python SDK documentation](https://docs.typesafe.ai/sdk/python/usage) and [async client reference](https://docs.typesafe.ai/sdk/python/api/clients/async).
 
 | Primitive  | Questions                                           | Returned information                                                   |
 | ---------- | --------------------------------------------------- | ---------------------------------------------------------------------- |
@@ -73,7 +69,7 @@ For example, raw satisfaction `2.6` becomes `3.6 / 5`, with the raw score and di
 
 ## Confidence gating
 
-Rules live in `src/lib/config.ts` and `src/lib/decisions/rules.ts`:
+Backend rules live in `backend/decisions.py`; frontend threshold displays stay in `src/lib/config.ts`:
 
 | Rule                     | Trigger                          |
 | ------------------------ | -------------------------------- |
@@ -106,7 +102,7 @@ Headers tolerate case, surrounding whitespace and a UTF-8 BOM. Standard quoted c
 
 Files are limited to **1 MiB (1,048,576 bytes) and 50 reviews**. CSV parsing and preview do not invoke Jev. Starting a batch explicitly schedules at most **two analyses concurrently**. `/api/batch` sends newline-delimited JSON `start`, `progress`, and `complete` events, with an `error` event for a stream-level failure. Results preserve input order even when completion order differs.
 
-An ordinary failed review does not discard successful results. Authentication, missing configuration, access, insufficient credit, and provider rate-limit failures stop queued inference. Cancellation stops scheduling and passes an abort signal to active calls; completed results remain visible. Cancellation cannot guarantee that a provider request already accepted will avoid a charge.
+An ordinary failed review does not discard successful results. Authentication, missing configuration, access, insufficient credit, and provider rate-limit failures stop queued inference. Cancellation closes the request/stream, cancels in-flight asyncio tasks and stops scheduling; completed results remain visible. Cancellation cannot guarantee that a provider request already accepted will avoid a charge.
 
 ## API and observability
 
@@ -123,27 +119,35 @@ The SDK attempt timeout is 20 seconds and each analysis has a 45-second overall 
 
 ## Running locally
 
-Use **Node.js 22.12+** and npm.
+Use **Node.js 22.12+** and **Python 3.12+** (verified with Python 3.14.3).
+
+From the project root:
 
 ```sh
 npm ci
-cp .env.example .env.local
+python3 -m venv backend/.venv
+backend/.venv/bin/python -m pip install -r backend/requirements-dev.txt
 ```
 
-Set your key in `.env.local`, then run:
+If `.env.local` does not already exist, copy `.env.example` to `.env.local` and set your key there. Keep existing local configuration intact.
+
+Terminal 1:
+
+```sh
+source backend/.venv/bin/activate
+cd backend
+uvicorn main:app --reload --host 127.0.0.1 --port 8000
+```
+
+Terminal 2, from the project root:
 
 ```sh
 npm run dev
 ```
 
-Open [localhost:3000](http://localhost:3000). The local server binds to loopback; set `PORT` to change the port. With no key, the application shows its configuration state and sample input, and analysis returns a clear configuration error. There is no silent mock fallback.
+Open [localhost:3000](http://localhost:3000). Vite proxies `/api/*` to FastAPI; no localhost URLs are scattered across components. With no key, health reports the configuration state and analysis returns a clear error. There is no silent mock fallback.
 
-To inspect the built app locally:
-
-```sh
-npm run build
-npm run preview
-```
+For the production frontend preview, keep FastAPI running and use `npm run build` followed by `npm run preview` instead of the Vite dev server. Both frontend commands use port 3000.
 
 ## Environment
 
@@ -151,55 +155,71 @@ npm run preview
 TYPESAFE_API_KEY=your_typesafe_api_key_here
 ```
 
-`server/dev.ts` and the manual verification script load `.env.local`. Environment and Wrangler local-secret files are ignored by Git. Never use a `VITE_*` variable for the key or place it in Wrangler `vars`. Production receives `TYPESAFE_API_KEY` from an encrypted Worker secret binding. No OpenAI key is required.
+Python loads the root `.env.local` without overriding environment variables supplied by a host. `.env.local`, virtual environments and generated Python caches are ignored. `.env.example` contains a placeholder only. Never use a `VITE_*` variable for the key. Node's `dotenv` is retained only as a development dependency for the existing secret-audit script.
+
+| Variable            | Where          | Purpose                                                                                           |
+| ------------------- | -------------- | ------------------------------------------------------------------------------------------------- |
+| `TYPESAFE_API_KEY`  | Python only    | TypeSafe credential                                                                               |
+| `FRONTEND_ORIGIN`   | Python         | Allowed frontend origin, default `http://localhost:3000`; comma-separated exact origins if needed |
+| `VITE_API_BASE_URL` | Frontend build | Public backend URL, e.g. `https://your-backend.onrender.com`; omit locally to use the Vite proxy  |
+
+Only the public backend URL enters the browser bundle. Production CORS permits the configured frontend origin, without cookies or wildcard origins.
 
 ## Tests
 
+From the project root:
+
 ```sh
+backend/.venv/bin/python -m pytest backend/tests -q
+backend/.venv/bin/python -m compileall -q backend -x '/\.venv/'
+npm test
 npm run typecheck
 npm run lint
 npm run format:check
-npm test
 npm run build
 npm run audit:secrets
-npm run deploy:check
+WRANGLER_SEND_METRICS=false npm run deploy:check
 ```
 
-The normal suite uses deterministic model fixtures and mocked adapters. It covers satisfaction mapping, mention gates, action rules, aggregation, malformed Jev responses, CSV limits, batch concurrency/cancellation/partial failures, and API validation/provider errors. These commands do not make paid inference requests. `npm run test:watch` is available during development.
+Normal tests use mocked inference. Python tests compare the exact 19 question definitions and normalized JSON against captured contracts, including camelCase, explicit nulls and omitted optional fields. They also cover malformed responses, mention/action thresholds, input limits, errors, retry/deadline policy, two-task batch execution, partial failures and real local-socket disconnect cancellation. Frontend tests retain CSV validation (1 MiB and 50 reviews), partial-result aggregation and API/NDJSON compatibility. No normal test makes a paid request.
 
-Real integration verification is a separate, explicit opt-in:
+Real verification stays explicitly opt-in:
 
 ```sh
 JEV_VERIFY_REAL=1 npm run test:jev
 ```
 
-Each invocation submits one review with 19 questions, using the mixed example by default and the bounded retry policy above. It checks the response shape, decision trace count, mention gating, and absence of the key in the result. Set `JEV_VERIFY_EXAMPLE` to one of `positive`, `battery`, `mixed`, `absent`, `ambiguous`, `multiple`, or `escalation` to select a different fixture. Use this sparingly; it consumes provider credit.
+This submits one review with 19 questions, using the mixed example by default and the bounded retry policy above. `JEV_VERIFY_EXAMPLE` can select `positive`, `battery`, `mixed`, `absent`, `ambiguous`, `multiple`, or `escalation`. Use it sparingly; it consumes provider credit.
 
-[CI](.github/workflows/ci.yml) runs dependency installation, typecheck, lint, formatting, fixture tests, production build, secret audit and Worker bundling on Node.js 22. Paid verification and public deployment are excluded.
+[CI](.github/workflows/ci.yml) installs both dependency sets, runs pytest and Python compilation, frontend tests, typecheck, lint, formatting, build, secret audit and the static-assets dry run. Paid inference and deployment are excluded. See [local migration verification](docs/verification.md) for observed evidence.
 
 ## Deployment
 
-`wrangler.jsonc` prepares a **Cloudflare Worker with static assets**. The Worker handles `/api/*` and serves the Vite build through `ASSETS`; the SPA fallback handles application navigation. The official TypeSafe SDK uses Fetch and detects the Workers runtime. The local Wrangler runtime completed a real 19-decision analysis during verification. `npm run deploy:check` performs a local build and Wrangler dry run; it does not publish, provision a secret, or verify the public Cloudflare deployment.
+The intended split is a static **Cloudflare frontend** plus a native **Render Python web service**. `wrangler.jsonc` now contains only static assets and the SPA fallback. There is no backend Worker, TypeSafe secret binding or inference rate-limit binding on Cloudflare.
 
-First validate the bundle without publishing:
+After deployment is explicitly authorized, configure a Render web service for this repository with:
+
+| Setting           | Value                                                                              |
+| ----------------- | ---------------------------------------------------------------------------------- |
+| Runtime           | Python 3                                                                           |
+| Root directory    | `backend`                                                                          |
+| Build command     | `pip install -r requirements.txt`                                                  |
+| Start command     | `uvicorn main:app --host 0.0.0.0 --port $PORT`                                     |
+| Health-check path | `/api/health`                                                                      |
+| Environment       | `TYPESAFE_API_KEY`, `FRONTEND_ORIGIN` set to the actual Cloudflare frontend origin |
+
+Use the tested Python 3.14 runtime. These commands follow [Render's FastAPI setup](https://render.com/docs/deploy-fastapi); the existing requirements file supplies the runtime dependencies. Keep the TypeSafe key in Render's server environment.
+
+Build the frontend with the actual public backend URL:
 
 ```sh
-WRANGLER_SEND_METRICS=false npm run deploy:check
+VITE_API_BASE_URL=https://your-backend.onrender.com npm run build
+WRANGLER_SEND_METRICS=false npx wrangler deploy --dry-run
 ```
 
-After explicitly authorizing public deployment and selecting the intended Cloudflare account:
+Cloudflare supports [static-assets deployments](https://developers.cloudflare.com/workers/static-assets/get-started/) without a custom backend script. A dry run validates local assets; it does not publish. When authorized, deploy that same build with `npx wrangler deploy` in the intended account. Rebuilding later requires the same public API URL.
 
-```sh
-npx wrangler login
-npx wrangler secret put TYPESAFE_API_KEY --name jevon
-npm run deploy
-```
-
-Enter the key at Wrangler's hidden prompt. The installed Wrangler can prompt to create a minimal Worker if `jevon` does not exist; accept that prompt for the intended account, then deploy the application. Secret updates create and immediately deploy a Worker version, so the secret command is itself an account mutation. See [Cloudflare's secret documentation](https://developers.cloudflare.com/workers/configuration/secrets/) and [Wrangler commands](https://developers.cloudflare.com/workers/wrangler/commands/workers/#secret-put).
-
-Check that `INFERENCE_RATE_LIMIT.namespace_id` (`1007`) is unique within your account unless shared counters are intentional. Production limits POST requests to five per 60 seconds per IP at each Cloudflare location. The binding is absent from the plain Node.js dev server. Cloudflare's rate limiter is eventually consistent and location-local; this control is not a global billing budget. See the [rate limiting binding documentation](https://developers.cloudflare.com/workers/runtime-apis/bindings/rate-limit/).
-
-Wrangler prints the actual URL. `https://jevon.dumpydon.workers.dev` is possible only if the account's Workers subdomain is `dumpydon`; the repository does not reserve that address. Verify `/api/health` after deployment, then perform a deliberate, small analysis. This project has not been publicly deployed as part of its initial build.
+The production static frontend does not proxy `/api`; `VITE_API_BASE_URL` is required there. Confirm the actual frontend origin in Render CORS, then verify health and a deliberate small analysis. Account setup, production CORS, public URLs and deployments remain pending; no deployment was performed during this migration.
 
 ## CampusX inspiration
 
@@ -210,9 +230,9 @@ The initial seven-aspect mention/satisfaction pattern was inspired by [CampusX's
 - Jev inference requires an external service and paid account credit; latency and availability depend on the provider and network.
 - The smartphone-specific schema and seven-example fixture do not establish general model accuracy. Benchmark agreement is diagnostic, and the optional conventional LLM baseline is not configured.
 - Results/history are held in browser memory and are lost on refresh. There is no durable job queue; leaving the page may cancel unfinished work.
-- Two-worker concurrency is a per-request limit. Concurrent visitors can create more than two provider calls overall; rate limiting does not impose an exact global spend cap.
+- Two-task concurrency is a per-request limit. Concurrent visitors can create more than two provider calls overall; the app does not impose a global spend cap.
 - The UI displays provider confidence without a calibration study. Model behavior and the SDK/API can evolve even when application thresholds remain fixed.
-- Local Worker inference and bundling passed; public deployment, account-side secrets and the final URL still require authorized account configuration.
+- Local FastAPI inference and the frontend static-assets dry run passed; public deployment, server-side secrets and final URLs still require authorized account configuration.
 
 ## License
 

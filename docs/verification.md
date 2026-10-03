@@ -1,16 +1,20 @@
-# Local verification
+# Python migration verification
 
-Verified on October 2, 2026. This records development evidence, not a provider performance or accuracy claim.
+Verified locally on October 3, 2026. These observations establish integration and contract compatibility, not general model accuracy or public deployment readiness.
 
-- Installed and inspected `@typesafe-ai/sdk` 0.6.0; real responses reported `jev-1.13.0`.
-- Five small real analyses in total: mixed feedback through the opt-in SDK script; battery/camera/performance feedback through the visible Decision Lab; one positive sample through streamed batch processing; packaging-only feedback through Benchmark; a safety/escalation review through the local Cloudflare Worker.
-- Every successful analysis returned 19 decisions and passed runtime normalization. Packaging-only feedback gated out all seven aspect ratings. The safety review triggered all three configured actions. No production fixture fallback exists.
-- Real batch results, aspect aggregates, sentiment chart, search/filter empty states, and row inspection were exercised. Benchmark latency and schema/fixture agreement came from the actual request; its LLM baseline stayed unconfigured.
-- Inspector distributions and raw fractional scores were inspected; keyboard focus wrapping and Escape dismissal were exercised.
-- Browser checks covered effective CSS viewports of 1440 × 900, 1280 × 719, 389 × 844 and 321 × 700. A hidden table label caused mobile page overflow; positioning the scroll container fixed it. No page overflow remained. The primary Analyze button fit the shorter laptop viewport.
-- Development and local Worker browser sessions rendered without console errors. Production assets and `/api/health` returned successfully in the Worker runtime.
-- Unit/API tests use mocked inference. Typecheck, lint, formatting, production build and Cloudflare dry run passed. The secret audit checked publishable files and the browser bundle against the ignored local credential; no matching value or prefix was found.
-- The CSV file chooser opened, but selecting a local CSV was rejected by browser approval review. That specific browser-upload action remains unverified. CSV validation, including malformed/oversized files and aliases, passed automated tests; the sample workflow was verified in the browser.
-- No public deployment, GitHub push or commit was performed. Benchmark and analysis history are session memory and clear on refresh.
+- Inspected the complete previous backend before deletion: routes, question definitions, normalization, rules, thresholds, batch cancellation/concurrency, benchmark, environment handling and frontend contracts.
+- Captured deterministic question definitions, five normalized boundary cases, aggregate/fixture outputs and nine API cases in `backend/tests/fixtures/legacy.json`. Python tests match these captured outputs, including camelCase, explicit null ratings/latencies and absent optional fields. Production never uses this fixture as a fallback.
+- Installed and inspected the official `typesafe-sdk==0.7.2` async API, response primitives, raw HTTP response, retry and error types. Runtime dependencies are pinned in `backend/requirements.txt`; Python 3.14.3 was used locally.
+- Made three real Python-backed analyses total: mixed feedback through Decision Lab, one positive review through streamed Batch Analyzer, and packaging-only feedback through Benchmark. All returned 19 decisions from `jev-1.13.0` and passed strict normalization. No additional paid calls are made by normal tests.
+- Decision Lab displayed mention gates, fractional 1–5 satisfaction, sentiment/topic, operational signals and deterministic actions. Inspector showed all 19 raw answers, Noul probabilities, Score legends/distributions, Choice distributions and thresholds.
+- The one-review batch delivered progress and completion, successful-only aggregates, sentiment/aspect charts and the result row. The five-row sample CSV was parsed in the browser without invoking inference until one review was explicitly selected.
+- Benchmark measured a 654 ms Jev analysis with valid schema and 6/6 declared fixture assertions. All seven absent aspect ratings were gated to null. The conventional LLM baseline remained `not_configured`. These are one-request observations, not a performance or accuracy claim.
+- Pytest covers API validation/errors, malformed provider output, exact questions/normalization/rules, 50 rows, bounded concurrency of two, fatal auth/credit handling, partial failures, deadlines/retry limits and SDK cancellation. A temporary mocked Uvicorn process verifies actual HTTP stream disconnects stop in-flight and queued work; it is test infrastructure only.
+- Frontend tests retain quoted/multiline CSV handling, aliases, invalid input and the 1 MiB/50-row boundaries. Additional checks cover public API base URLs, chunked NDJSON, safe errors, matching evaluation inputs and unchanged partial-result aggregation.
+- Components, feature pages, CSS, app shell, types, fixtures and CSV parser were checked against pre-migration SHA-256 hashes: all 14 files were byte-for-byte unchanged. Only frontend networking and Vite configuration changed.
+- The final development setup serves Vite on localhost:3000 and FastAPI on port 8000. The side browser and automated browser check loaded the app, status and controls without console errors. FastAPI logs contained request IDs, timing, counts and safe status metadata, with no review text or credential.
+- Frontend typecheck, lint, formatting, tests, production build, Python tests/import compilation/dependency checks, secret audit and the Cloudflare static-assets dry run passed. No obsolete backend implementation or JavaScript TypeSafe/Hono dependency remains. Cloudflare has no backend/secret/rate-limit binding.
+- `.env.local` remains intact and ignored. The secret audit checked the local credential against publishable files and browser assets without printing it. `.env.example` still contains only a placeholder. No secret file is tracked.
+- No commit, push or deployment was performed. Changes remain in the local working tree. Deployment still requires a Render Python service, server-side key, exact frontend CORS origin, and a Cloudflare frontend build with the public backend URL.
 
-The repeatable paid path remains opt-in: `JEV_VERIFY_REAL=1 npm run test:jev`. Do not run it in normal CI.
+Repeat ordinary checks with the README commands. Paid verification remains explicit: `JEV_VERIFY_REAL=1 npm run test:jev`. Do not enable it in CI.

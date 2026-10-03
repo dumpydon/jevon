@@ -1,0 +1,4417 @@
+{
+  "questions": {
+    "camera_mentioned": {
+      "type": "noul",
+      "instructions": "Does the reviewer express an opinion or describe an experience about camera (photo and video quality, camera features)? Mere product ownership or unrelated packaging does not count.",
+      "criteria": {
+        "true": "A substantive aspect-specific opinion or experience is stated.",
+        "false": "The aspect is absent, only named without an opinion, or unsupported by the review."
+      }
+    },
+    "camera_satisfaction": {
+      "type": "score",
+      "instructions": "How satisfied is the reviewer with camera (photo and video quality, camera features)? Evaluate only this aspect, not the overall review. If it is not discussed, use neutral; application code will discard its score.",
+      "criteria": [
+        "Very dissatisfied",
+        "Dissatisfied",
+        "Neutral / mixed",
+        "Satisfied",
+        "Very satisfied"
+      ]
+    },
+    "battery_mentioned": {
+      "type": "noul",
+      "instructions": "Does the reviewer express an opinion or describe an experience about battery (battery life, charging speed and reliability)? Mere product ownership or unrelated packaging does not count.",
+      "criteria": {
+        "true": "A substantive aspect-specific opinion or experience is stated.",
+        "false": "The aspect is absent, only named without an opinion, or unsupported by the review."
+      }
+    },
+    "battery_satisfaction": {
+      "type": "score",
+      "instructions": "How satisfied is the reviewer with battery (battery life, charging speed and reliability)? Evaluate only this aspect, not the overall review. If it is not discussed, use neutral; application code will discard its score.",
+      "criteria": [
+        "Very dissatisfied",
+        "Dissatisfied",
+        "Neutral / mixed",
+        "Satisfied",
+        "Very satisfied"
+      ]
+    },
+    "display_mentioned": {
+      "type": "noul",
+      "instructions": "Does the reviewer express an opinion or describe an experience about display (screen quality, brightness and refresh rate)? Mere product ownership or unrelated packaging does not count.",
+      "criteria": {
+        "true": "A substantive aspect-specific opinion or experience is stated.",
+        "false": "The aspect is absent, only named without an opinion, or unsupported by the review."
+      }
+    },
+    "display_satisfaction": {
+      "type": "score",
+      "instructions": "How satisfied is the reviewer with display (screen quality, brightness and refresh rate)? Evaluate only this aspect, not the overall review. If it is not discussed, use neutral; application code will discard its score.",
+      "criteria": [
+        "Very dissatisfied",
+        "Dissatisfied",
+        "Neutral / mixed",
+        "Satisfied",
+        "Very satisfied"
+      ]
+    },
+    "design_mentioned": {
+      "type": "noul",
+      "instructions": "Does the reviewer express an opinion or describe an experience about design (appearance, ergonomics and form factor)? Mere product ownership or unrelated packaging does not count.",
+      "criteria": {
+        "true": "A substantive aspect-specific opinion or experience is stated.",
+        "false": "The aspect is absent, only named without an opinion, or unsupported by the review."
+      }
+    },
+    "design_satisfaction": {
+      "type": "score",
+      "instructions": "How satisfied is the reviewer with design (appearance, ergonomics and form factor)? Evaluate only this aspect, not the overall review. If it is not discussed, use neutral; application code will discard its score.",
+      "criteria": [
+        "Very dissatisfied",
+        "Dissatisfied",
+        "Neutral / mixed",
+        "Satisfied",
+        "Very satisfied"
+      ]
+    },
+    "performance_mentioned": {
+      "type": "noul",
+      "instructions": "Does the reviewer express an opinion or describe an experience about performance (speed, responsiveness, gaming and software stability)? Mere product ownership or unrelated packaging does not count.",
+      "criteria": {
+        "true": "A substantive aspect-specific opinion or experience is stated.",
+        "false": "The aspect is absent, only named without an opinion, or unsupported by the review."
+      }
+    },
+    "performance_satisfaction": {
+      "type": "score",
+      "instructions": "How satisfied is the reviewer with performance (speed, responsiveness, gaming and software stability)? Evaluate only this aspect, not the overall review. If it is not discussed, use neutral; application code will discard its score.",
+      "criteria": [
+        "Very dissatisfied",
+        "Dissatisfied",
+        "Neutral / mixed",
+        "Satisfied",
+        "Very satisfied"
+      ]
+    },
+    "build_quality_mentioned": {
+      "type": "noul",
+      "instructions": "Does the reviewer express an opinion or describe an experience about build quality (durability, materials and construction)? Mere product ownership or unrelated packaging does not count.",
+      "criteria": {
+        "true": "A substantive aspect-specific opinion or experience is stated.",
+        "false": "The aspect is absent, only named without an opinion, or unsupported by the review."
+      }
+    },
+    "build_quality_satisfaction": {
+      "type": "score",
+      "instructions": "How satisfied is the reviewer with build quality (durability, materials and construction)? Evaluate only this aspect, not the overall review. If it is not discussed, use neutral; application code will discard its score.",
+      "criteria": [
+        "Very dissatisfied",
+        "Dissatisfied",
+        "Neutral / mixed",
+        "Satisfied",
+        "Very satisfied"
+      ]
+    },
+    "value_for_money_mentioned": {
+      "type": "noul",
+      "instructions": "Does the reviewer express an opinion or describe an experience about value for money (price, affordability and value relative to cost)? Mere product ownership or unrelated packaging does not count.",
+      "criteria": {
+        "true": "A substantive aspect-specific opinion or experience is stated.",
+        "false": "The aspect is absent, only named without an opinion, or unsupported by the review."
+      }
+    },
+    "value_for_money_satisfaction": {
+      "type": "score",
+      "instructions": "How satisfied is the reviewer with value for money (price, affordability and value relative to cost)? Evaluate only this aspect, not the overall review. If it is not discussed, use neutral; application code will discard its score.",
+      "criteria": [
+        "Very dissatisfied",
+        "Dissatisfied",
+        "Neutral / mixed",
+        "Satisfied",
+        "Very satisfied"
+      ]
+    },
+    "overall_sentiment": {
+      "type": "choice",
+      "instructions": "What is the overall customer sentiment? Treat balanced mixed or unclear feedback as neutral.",
+      "criteria": {
+        "negative": "Predominantly dissatisfied, disappointed, or critical",
+        "neutral": "Neutral, ambiguous, or balanced positive and negative feedback",
+        "positive": "Predominantly satisfied, enthusiastic, or recommending the product"
+      }
+    },
+    "primary_topic": {
+      "type": "choice",
+      "instructions": "Which single product aspect is the main focus or principal reason for the customer feedback? Choose other for feedback outside these aspects or with no clear aspect focus.",
+      "criteria": {
+        "camera": "photo and video quality, camera features",
+        "battery": "battery life, charging speed and reliability",
+        "display": "screen quality, brightness and refresh rate",
+        "design": "appearance, ergonomics and form factor",
+        "performance": "speed, responsiveness, gaming and software stability",
+        "build_quality": "durability, materials and construction",
+        "value_for_money": "price, affordability and value relative to cost",
+        "other": "Packaging, delivery, service, unrelated feedback, or no clear product-aspect focus"
+      }
+    },
+    "urgency": {
+      "type": "score",
+      "instructions": "How urgently does this feedback need operational attention? Distinguish strong negative opinion from genuine time sensitivity or safety concerns.",
+      "criteria": [
+        "No immediate action needed; general opinion or praise",
+        "Minor inconvenience; can be handled routinely",
+        "Meaningful problem; prompt follow-up is appropriate",
+        "Time-sensitive or major loss of product function; urgent attention needed",
+        "Immediate danger, safety issue, or critical harm"
+      ]
+    },
+    "churn_risk": {
+      "type": "score",
+      "instructions": "How much evidence is there that this customer will stop using, return, switch away from, or avoid buying the product again? Do not infer intent to leave from a minor complaint alone.",
+      "criteria": [
+        "No sign of leaving; satisfied or likely to buy again",
+        "Minor dissatisfaction without any intent to leave",
+        "Uncertain future purchase, regret, or substantial dissatisfaction",
+        "Likely to stop using, return, switch, or avoid buying again",
+        "Explicit decision to leave, switch brands, or never buy again"
+      ]
+    },
+    "escalation_need": {
+      "type": "noul",
+      "instructions": "Should a person review this feedback because it describes a safety problem, a severe product failure, unresolved repeated support attempts, or an explicit urgent request? Ordinary praise or a routine minor complaint does not require escalation.",
+      "criteria": {
+        "true": "Human attention is justified by a serious or unresolved problem.",
+        "false": "Routine feedback can be handled without escalation."
+      }
+    }
+  },
+  "aspects": [
+    {
+      "id": "camera",
+      "label": "Camera",
+      "description": "photo and video quality, camera features"
+    },
+    {
+      "id": "battery",
+      "label": "Battery",
+      "description": "battery life, charging speed and reliability"
+    },
+    {
+      "id": "display",
+      "label": "Display",
+      "description": "screen quality, brightness and refresh rate"
+    },
+    {
+      "id": "design",
+      "label": "Design",
+      "description": "appearance, ergonomics and form factor"
+    },
+    {
+      "id": "performance",
+      "label": "Performance",
+      "description": "speed, responsiveness, gaming and software stability"
+    },
+    {
+      "id": "build_quality",
+      "label": "Build quality",
+      "description": "durability, materials and construction"
+    },
+    {
+      "id": "value_for_money",
+      "label": "Value for money",
+      "description": "price, affordability and value relative to cost"
+    }
+  ],
+  "satisfactionLabels": [
+    "Very dissatisfied",
+    "Dissatisfied",
+    "Neutral / mixed",
+    "Satisfied",
+    "Very satisfied"
+  ],
+  "limits": {
+    "maxCharacters": 8000,
+    "maxReviews": 50,
+    "maxCsvBytes": 1048576,
+    "concurrency": 2,
+    "timeoutMs": 20000,
+    "totalTimeoutMs": 45000,
+    "benchmarkDefault": 3,
+    "benchmarkMax": 5
+  },
+  "thresholds": {
+    "aspectMention": 0.5,
+    "escalation": 0.75,
+    "churnRisk": 3,
+    "urgency": 3
+  },
+  "model": "jev-1.13.0",
+  "cases": [
+    {
+      "raw": {
+        "model": "jev-1.13.0",
+        "answers": {
+          "camera_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "camera_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "battery_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "battery_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "display_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "display_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "design_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "design_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "performance_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "performance_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "build_quality_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "build_quality_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "value_for_money_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "value_for_money_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "overall_sentiment": {
+            "type": "choice",
+            "choice": "negative",
+            "confidence": 1,
+            "probabilities": {
+              "negative": 1,
+              "neutral": 0,
+              "positive": 0
+            }
+          },
+          "primary_topic": {
+            "type": "choice",
+            "choice": "battery",
+            "confidence": 1,
+            "probabilities": {
+              "camera": 0,
+              "battery": 1,
+              "display": 0,
+              "design": 0,
+              "performance": 0,
+              "build_quality": 0,
+              "value_for_money": 0,
+              "other": 0
+            }
+          },
+          "urgency": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "No immediate action needed; general opinion or praise",
+              "1": "Minor inconvenience; can be handled routinely",
+              "2": "Meaningful problem; prompt follow-up is appropriate",
+              "3": "Time-sensitive or major loss of product function; urgent attention needed",
+              "4": "Immediate danger, safety issue, or critical harm"
+            }
+          },
+          "churn_risk": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "No sign of leaving; satisfied or likely to buy again",
+              "1": "Minor dissatisfaction without any intent to leave",
+              "2": "Uncertain future purchase, regret, or substantial dissatisfaction",
+              "3": "Likely to stop using, return, switch, or avoid buying again",
+              "4": "Explicit decision to leave, switch brands, or never buy again"
+            }
+          },
+          "escalation_need": {
+            "type": "noul",
+            "noul": 0.2
+          }
+        },
+        "usage": {
+          "input_tokens": 100,
+          "output_tokens": 20
+        }
+      },
+      "review": {
+        "reviewId": "fixture-0",
+        "product": "Compatibility fixture",
+        "reviewText": "A deterministic battery review."
+      },
+      "expected": {
+        "requestId": "legacy-request",
+        "review": {
+          "reviewId": "fixture-0",
+          "product": "Compatibility fixture",
+          "reviewText": "A deterministic battery review."
+        },
+        "model": "jev-1.13.0",
+        "source": "jev",
+        "analyzedAt": "2026-10-02T00:00:00.000Z",
+        "durationMs": 120,
+        "decisionCount": 19,
+        "usage": {
+          "inputTokens": 100,
+          "outputTokens": 20
+        },
+        "aspects": [
+          {
+            "id": "camera",
+            "label": "Camera",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "battery",
+            "label": "Battery",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "display",
+            "label": "Display",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "design",
+            "label": "Design",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "performance",
+            "label": "Performance",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "build_quality",
+            "label": "Build quality",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "value_for_money",
+            "label": "Value for money",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          }
+        ],
+        "signal": {
+          "sentiment": "negative",
+          "sentimentConfidence": 1,
+          "primaryTopic": "battery",
+          "topicConfidence": 1,
+          "urgency": 2,
+          "urgencyConfidence": 0.8,
+          "churnRisk": 2,
+          "churnConfidence": 0.8,
+          "escalationProbability": 0.2
+        },
+        "actions": [
+          {
+            "id": "escalate",
+            "label": "Escalate to a person",
+            "triggered": false,
+            "rule": "escalation_need >= 0.75",
+            "value": 0.2,
+            "threshold": 0.75
+          },
+          {
+            "id": "retention",
+            "label": "Retention follow-up",
+            "triggered": false,
+            "rule": "churn_risk >= 3 / 4",
+            "value": 2,
+            "threshold": 3
+          },
+          {
+            "id": "urgent",
+            "label": "Prioritize urgent review",
+            "triggered": false,
+            "rule": "urgency >= 3 / 4",
+            "value": 2,
+            "threshold": 3
+          }
+        ],
+        "traces": [
+          {
+            "id": "camera_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "camera_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "battery_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "battery_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "display_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "display_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "design_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "design_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "performance_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "performance_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "build_quality_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "build_quality_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "value_for_money_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "value_for_money_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "overall_sentiment",
+            "decision": {
+              "type": "choice",
+              "choice": "negative",
+              "confidence": 1,
+              "probabilities": {
+                "negative": 1,
+                "neutral": 0,
+                "positive": 0
+              }
+            }
+          },
+          {
+            "id": "primary_topic",
+            "decision": {
+              "type": "choice",
+              "choice": "battery",
+              "confidence": 1,
+              "probabilities": {
+                "camera": 0,
+                "battery": 1,
+                "display": 0,
+                "design": 0,
+                "performance": 0,
+                "build_quality": 0,
+                "value_for_money": 0,
+                "other": 0
+              }
+            }
+          },
+          {
+            "id": "urgency",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "No immediate action needed; general opinion or praise",
+                "1": "Minor inconvenience; can be handled routinely",
+                "2": "Meaningful problem; prompt follow-up is appropriate",
+                "3": "Time-sensitive or major loss of product function; urgent attention needed",
+                "4": "Immediate danger, safety issue, or critical harm"
+              }
+            },
+            "threshold": 3,
+            "accepted": false
+          },
+          {
+            "id": "churn_risk",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "No sign of leaving; satisfied or likely to buy again",
+                "1": "Minor dissatisfaction without any intent to leave",
+                "2": "Uncertain future purchase, regret, or substantial dissatisfaction",
+                "3": "Likely to stop using, return, switch, or avoid buying again",
+                "4": "Explicit decision to leave, switch brands, or never buy again"
+              }
+            },
+            "threshold": 3,
+            "accepted": false
+          },
+          {
+            "id": "escalation_need",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.75,
+            "accepted": false
+          }
+        ]
+      }
+    },
+    {
+      "raw": {
+        "model": "jev-1.13.0",
+        "answers": {
+          "camera_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "camera_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "battery_mentioned": {
+            "type": "noul",
+            "noul": 0.49
+          },
+          "battery_satisfaction": {
+            "type": "score",
+            "score": 1.4,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0.6000000000000001,
+              "2": 0.3999999999999999,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "display_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "display_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "design_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "design_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "performance_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "performance_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "build_quality_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "build_quality_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "value_for_money_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "value_for_money_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "overall_sentiment": {
+            "type": "choice",
+            "choice": "negative",
+            "confidence": 1,
+            "probabilities": {
+              "negative": 1,
+              "neutral": 0,
+              "positive": 0
+            }
+          },
+          "primary_topic": {
+            "type": "choice",
+            "choice": "battery",
+            "confidence": 1,
+            "probabilities": {
+              "camera": 0,
+              "battery": 1,
+              "display": 0,
+              "design": 0,
+              "performance": 0,
+              "build_quality": 0,
+              "value_for_money": 0,
+              "other": 0
+            }
+          },
+          "urgency": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "No immediate action needed; general opinion or praise",
+              "1": "Minor inconvenience; can be handled routinely",
+              "2": "Meaningful problem; prompt follow-up is appropriate",
+              "3": "Time-sensitive or major loss of product function; urgent attention needed",
+              "4": "Immediate danger, safety issue, or critical harm"
+            }
+          },
+          "churn_risk": {
+            "type": "score",
+            "score": 2.9,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 0.10000000000000009,
+              "3": 0.8999999999999999,
+              "4": 0
+            },
+            "legend": {
+              "0": "No sign of leaving; satisfied or likely to buy again",
+              "1": "Minor dissatisfaction without any intent to leave",
+              "2": "Uncertain future purchase, regret, or substantial dissatisfaction",
+              "3": "Likely to stop using, return, switch, or avoid buying again",
+              "4": "Explicit decision to leave, switch brands, or never buy again"
+            }
+          },
+          "escalation_need": {
+            "type": "noul",
+            "noul": 0.74
+          }
+        },
+        "usage": {
+          "input_tokens": 100,
+          "output_tokens": 20
+        }
+      },
+      "review": {
+        "reviewId": "fixture-1",
+        "product": "Compatibility fixture",
+        "reviewText": "A deterministic battery review."
+      },
+      "expected": {
+        "requestId": "legacy-request",
+        "review": {
+          "reviewId": "fixture-1",
+          "product": "Compatibility fixture",
+          "reviewText": "A deterministic battery review."
+        },
+        "model": "jev-1.13.0",
+        "source": "jev",
+        "analyzedAt": "2026-10-02T00:00:00.000Z",
+        "durationMs": 120,
+        "decisionCount": 19,
+        "usage": {
+          "inputTokens": 100,
+          "outputTokens": 20
+        },
+        "aspects": [
+          {
+            "id": "camera",
+            "label": "Camera",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "battery",
+            "label": "Battery",
+            "mentionProbability": 0.49,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "display",
+            "label": "Display",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "design",
+            "label": "Design",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "performance",
+            "label": "Performance",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "build_quality",
+            "label": "Build quality",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "value_for_money",
+            "label": "Value for money",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          }
+        ],
+        "signal": {
+          "sentiment": "negative",
+          "sentimentConfidence": 1,
+          "primaryTopic": "battery",
+          "topicConfidence": 1,
+          "urgency": 2,
+          "urgencyConfidence": 0.8,
+          "churnRisk": 2.9,
+          "churnConfidence": 0.8,
+          "escalationProbability": 0.74
+        },
+        "actions": [
+          {
+            "id": "escalate",
+            "label": "Escalate to a person",
+            "triggered": false,
+            "rule": "escalation_need >= 0.75",
+            "value": 0.74,
+            "threshold": 0.75
+          },
+          {
+            "id": "retention",
+            "label": "Retention follow-up",
+            "triggered": false,
+            "rule": "churn_risk >= 3 / 4",
+            "value": 2.9,
+            "threshold": 3
+          },
+          {
+            "id": "urgent",
+            "label": "Prioritize urgent review",
+            "triggered": false,
+            "rule": "urgency >= 3 / 4",
+            "value": 2,
+            "threshold": 3
+          }
+        ],
+        "traces": [
+          {
+            "id": "camera_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "camera_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "battery_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.49
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "battery_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 1.4,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0.6000000000000001,
+                "2": 0.3999999999999999,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "display_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "display_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "design_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "design_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "performance_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "performance_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "build_quality_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "build_quality_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "value_for_money_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "value_for_money_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "overall_sentiment",
+            "decision": {
+              "type": "choice",
+              "choice": "negative",
+              "confidence": 1,
+              "probabilities": {
+                "negative": 1,
+                "neutral": 0,
+                "positive": 0
+              }
+            }
+          },
+          {
+            "id": "primary_topic",
+            "decision": {
+              "type": "choice",
+              "choice": "battery",
+              "confidence": 1,
+              "probabilities": {
+                "camera": 0,
+                "battery": 1,
+                "display": 0,
+                "design": 0,
+                "performance": 0,
+                "build_quality": 0,
+                "value_for_money": 0,
+                "other": 0
+              }
+            }
+          },
+          {
+            "id": "urgency",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "No immediate action needed; general opinion or praise",
+                "1": "Minor inconvenience; can be handled routinely",
+                "2": "Meaningful problem; prompt follow-up is appropriate",
+                "3": "Time-sensitive or major loss of product function; urgent attention needed",
+                "4": "Immediate danger, safety issue, or critical harm"
+              }
+            },
+            "threshold": 3,
+            "accepted": false
+          },
+          {
+            "id": "churn_risk",
+            "decision": {
+              "type": "score",
+              "score": 2.9,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 0.10000000000000009,
+                "3": 0.8999999999999999,
+                "4": 0
+              },
+              "legend": {
+                "0": "No sign of leaving; satisfied or likely to buy again",
+                "1": "Minor dissatisfaction without any intent to leave",
+                "2": "Uncertain future purchase, regret, or substantial dissatisfaction",
+                "3": "Likely to stop using, return, switch, or avoid buying again",
+                "4": "Explicit decision to leave, switch brands, or never buy again"
+              }
+            },
+            "threshold": 3,
+            "accepted": false
+          },
+          {
+            "id": "escalation_need",
+            "decision": {
+              "type": "noul",
+              "noul": 0.74
+            },
+            "threshold": 0.75,
+            "accepted": false
+          }
+        ]
+      }
+    },
+    {
+      "raw": {
+        "model": "jev-1.13.0",
+        "answers": {
+          "camera_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "camera_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "battery_mentioned": {
+            "type": "noul",
+            "noul": 0.5
+          },
+          "battery_satisfaction": {
+            "type": "score",
+            "score": 2.5,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 0.5,
+              "3": 0.5,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "display_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "display_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "design_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "design_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "performance_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "performance_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "build_quality_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "build_quality_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "value_for_money_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "value_for_money_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "overall_sentiment": {
+            "type": "choice",
+            "choice": "negative",
+            "confidence": 1,
+            "probabilities": {
+              "negative": 1,
+              "neutral": 0,
+              "positive": 0
+            }
+          },
+          "primary_topic": {
+            "type": "choice",
+            "choice": "battery",
+            "confidence": 1,
+            "probabilities": {
+              "camera": 0,
+              "battery": 1,
+              "display": 0,
+              "design": 0,
+              "performance": 0,
+              "build_quality": 0,
+              "value_for_money": 0,
+              "other": 0
+            }
+          },
+          "urgency": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "No immediate action needed; general opinion or praise",
+              "1": "Minor inconvenience; can be handled routinely",
+              "2": "Meaningful problem; prompt follow-up is appropriate",
+              "3": "Time-sensitive or major loss of product function; urgent attention needed",
+              "4": "Immediate danger, safety issue, or critical harm"
+            }
+          },
+          "churn_risk": {
+            "type": "score",
+            "score": 3,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 1,
+              "4": 0
+            },
+            "legend": {
+              "0": "No sign of leaving; satisfied or likely to buy again",
+              "1": "Minor dissatisfaction without any intent to leave",
+              "2": "Uncertain future purchase, regret, or substantial dissatisfaction",
+              "3": "Likely to stop using, return, switch, or avoid buying again",
+              "4": "Explicit decision to leave, switch brands, or never buy again"
+            }
+          },
+          "escalation_need": {
+            "type": "noul",
+            "noul": 0.75
+          }
+        },
+        "usage": {
+          "input_tokens": 100,
+          "output_tokens": 20
+        }
+      },
+      "review": {
+        "reviewId": "fixture-2",
+        "product": "Compatibility fixture",
+        "reviewText": "A deterministic battery review."
+      },
+      "expected": {
+        "requestId": "legacy-request",
+        "review": {
+          "reviewId": "fixture-2",
+          "product": "Compatibility fixture",
+          "reviewText": "A deterministic battery review."
+        },
+        "model": "jev-1.13.0",
+        "source": "jev",
+        "analyzedAt": "2026-10-02T00:00:00.000Z",
+        "durationMs": 120,
+        "decisionCount": 19,
+        "usage": {
+          "inputTokens": 100,
+          "outputTokens": 20
+        },
+        "aspects": [
+          {
+            "id": "camera",
+            "label": "Camera",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "battery",
+            "label": "Battery",
+            "mentionProbability": 0.5,
+            "mentioned": true,
+            "rating": 3.5,
+            "satisfactionLabel": "Satisfied",
+            "confidence": 0.8
+          },
+          {
+            "id": "display",
+            "label": "Display",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "design",
+            "label": "Design",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "performance",
+            "label": "Performance",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "build_quality",
+            "label": "Build quality",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "value_for_money",
+            "label": "Value for money",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          }
+        ],
+        "signal": {
+          "sentiment": "negative",
+          "sentimentConfidence": 1,
+          "primaryTopic": "battery",
+          "topicConfidence": 1,
+          "urgency": 2,
+          "urgencyConfidence": 0.8,
+          "churnRisk": 3,
+          "churnConfidence": 0.8,
+          "escalationProbability": 0.75
+        },
+        "actions": [
+          {
+            "id": "escalate",
+            "label": "Escalate to a person",
+            "triggered": true,
+            "rule": "escalation_need >= 0.75",
+            "value": 0.75,
+            "threshold": 0.75
+          },
+          {
+            "id": "retention",
+            "label": "Retention follow-up",
+            "triggered": true,
+            "rule": "churn_risk >= 3 / 4",
+            "value": 3,
+            "threshold": 3
+          },
+          {
+            "id": "urgent",
+            "label": "Prioritize urgent review",
+            "triggered": false,
+            "rule": "urgency >= 3 / 4",
+            "value": 2,
+            "threshold": 3
+          }
+        ],
+        "traces": [
+          {
+            "id": "camera_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "camera_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "battery_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.5
+            },
+            "threshold": 0.5,
+            "accepted": true
+          },
+          {
+            "id": "battery_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2.5,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 0.5,
+                "3": 0.5,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": true,
+            "mappedRating": 3.5
+          },
+          {
+            "id": "display_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "display_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "design_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "design_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "performance_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "performance_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "build_quality_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "build_quality_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "value_for_money_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "value_for_money_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "overall_sentiment",
+            "decision": {
+              "type": "choice",
+              "choice": "negative",
+              "confidence": 1,
+              "probabilities": {
+                "negative": 1,
+                "neutral": 0,
+                "positive": 0
+              }
+            }
+          },
+          {
+            "id": "primary_topic",
+            "decision": {
+              "type": "choice",
+              "choice": "battery",
+              "confidence": 1,
+              "probabilities": {
+                "camera": 0,
+                "battery": 1,
+                "display": 0,
+                "design": 0,
+                "performance": 0,
+                "build_quality": 0,
+                "value_for_money": 0,
+                "other": 0
+              }
+            }
+          },
+          {
+            "id": "urgency",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "No immediate action needed; general opinion or praise",
+                "1": "Minor inconvenience; can be handled routinely",
+                "2": "Meaningful problem; prompt follow-up is appropriate",
+                "3": "Time-sensitive or major loss of product function; urgent attention needed",
+                "4": "Immediate danger, safety issue, or critical harm"
+              }
+            },
+            "threshold": 3,
+            "accepted": false
+          },
+          {
+            "id": "churn_risk",
+            "decision": {
+              "type": "score",
+              "score": 3,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 0,
+                "3": 1,
+                "4": 0
+              },
+              "legend": {
+                "0": "No sign of leaving; satisfied or likely to buy again",
+                "1": "Minor dissatisfaction without any intent to leave",
+                "2": "Uncertain future purchase, regret, or substantial dissatisfaction",
+                "3": "Likely to stop using, return, switch, or avoid buying again",
+                "4": "Explicit decision to leave, switch brands, or never buy again"
+              }
+            },
+            "threshold": 3,
+            "accepted": true
+          },
+          {
+            "id": "escalation_need",
+            "decision": {
+              "type": "noul",
+              "noul": 0.75
+            },
+            "threshold": 0.75,
+            "accepted": true
+          }
+        ]
+      }
+    },
+    {
+      "raw": {
+        "model": "jev-1.13.0",
+        "answers": {
+          "camera_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "camera_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "battery_mentioned": {
+            "type": "noul",
+            "noul": 0.99
+          },
+          "battery_satisfaction": {
+            "type": "score",
+            "score": 4,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 1
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "display_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "display_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "design_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "design_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "performance_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "performance_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "build_quality_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "build_quality_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "value_for_money_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "value_for_money_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "overall_sentiment": {
+            "type": "choice",
+            "choice": "negative",
+            "confidence": 1,
+            "probabilities": {
+              "negative": 1,
+              "neutral": 0,
+              "positive": 0
+            }
+          },
+          "primary_topic": {
+            "type": "choice",
+            "choice": "battery",
+            "confidence": 1,
+            "probabilities": {
+              "camera": 0,
+              "battery": 1,
+              "display": 0,
+              "design": 0,
+              "performance": 0,
+              "build_quality": 0,
+              "value_for_money": 0,
+              "other": 0
+            }
+          },
+          "urgency": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "No immediate action needed; general opinion or praise",
+              "1": "Minor inconvenience; can be handled routinely",
+              "2": "Meaningful problem; prompt follow-up is appropriate",
+              "3": "Time-sensitive or major loss of product function; urgent attention needed",
+              "4": "Immediate danger, safety issue, or critical harm"
+            }
+          },
+          "churn_risk": {
+            "type": "score",
+            "score": 4,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 1
+            },
+            "legend": {
+              "0": "No sign of leaving; satisfied or likely to buy again",
+              "1": "Minor dissatisfaction without any intent to leave",
+              "2": "Uncertain future purchase, regret, or substantial dissatisfaction",
+              "3": "Likely to stop using, return, switch, or avoid buying again",
+              "4": "Explicit decision to leave, switch brands, or never buy again"
+            }
+          },
+          "escalation_need": {
+            "type": "noul",
+            "noul": 1
+          }
+        },
+        "usage": {
+          "input_tokens": 100,
+          "output_tokens": 20
+        }
+      },
+      "review": {
+        "reviewId": "fixture-3",
+        "product": "Compatibility fixture",
+        "reviewText": "A deterministic battery review."
+      },
+      "expected": {
+        "requestId": "legacy-request",
+        "review": {
+          "reviewId": "fixture-3",
+          "product": "Compatibility fixture",
+          "reviewText": "A deterministic battery review."
+        },
+        "model": "jev-1.13.0",
+        "source": "jev",
+        "analyzedAt": "2026-10-02T00:00:00.000Z",
+        "durationMs": 120,
+        "decisionCount": 19,
+        "usage": {
+          "inputTokens": 100,
+          "outputTokens": 20
+        },
+        "aspects": [
+          {
+            "id": "camera",
+            "label": "Camera",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "battery",
+            "label": "Battery",
+            "mentionProbability": 0.99,
+            "mentioned": true,
+            "rating": 5,
+            "satisfactionLabel": "Very satisfied",
+            "confidence": 0.8
+          },
+          {
+            "id": "display",
+            "label": "Display",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "design",
+            "label": "Design",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "performance",
+            "label": "Performance",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "build_quality",
+            "label": "Build quality",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "value_for_money",
+            "label": "Value for money",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          }
+        ],
+        "signal": {
+          "sentiment": "negative",
+          "sentimentConfidence": 1,
+          "primaryTopic": "battery",
+          "topicConfidence": 1,
+          "urgency": 2,
+          "urgencyConfidence": 0.8,
+          "churnRisk": 4,
+          "churnConfidence": 0.8,
+          "escalationProbability": 1
+        },
+        "actions": [
+          {
+            "id": "escalate",
+            "label": "Escalate to a person",
+            "triggered": true,
+            "rule": "escalation_need >= 0.75",
+            "value": 1,
+            "threshold": 0.75
+          },
+          {
+            "id": "retention",
+            "label": "Retention follow-up",
+            "triggered": true,
+            "rule": "churn_risk >= 3 / 4",
+            "value": 4,
+            "threshold": 3
+          },
+          {
+            "id": "urgent",
+            "label": "Prioritize urgent review",
+            "triggered": false,
+            "rule": "urgency >= 3 / 4",
+            "value": 2,
+            "threshold": 3
+          }
+        ],
+        "traces": [
+          {
+            "id": "camera_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "camera_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "battery_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.99
+            },
+            "threshold": 0.5,
+            "accepted": true
+          },
+          {
+            "id": "battery_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 4,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 0,
+                "3": 0,
+                "4": 1
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": true,
+            "mappedRating": 5
+          },
+          {
+            "id": "display_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "display_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "design_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "design_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "performance_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "performance_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "build_quality_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "build_quality_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "value_for_money_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "value_for_money_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "overall_sentiment",
+            "decision": {
+              "type": "choice",
+              "choice": "negative",
+              "confidence": 1,
+              "probabilities": {
+                "negative": 1,
+                "neutral": 0,
+                "positive": 0
+              }
+            }
+          },
+          {
+            "id": "primary_topic",
+            "decision": {
+              "type": "choice",
+              "choice": "battery",
+              "confidence": 1,
+              "probabilities": {
+                "camera": 0,
+                "battery": 1,
+                "display": 0,
+                "design": 0,
+                "performance": 0,
+                "build_quality": 0,
+                "value_for_money": 0,
+                "other": 0
+              }
+            }
+          },
+          {
+            "id": "urgency",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "No immediate action needed; general opinion or praise",
+                "1": "Minor inconvenience; can be handled routinely",
+                "2": "Meaningful problem; prompt follow-up is appropriate",
+                "3": "Time-sensitive or major loss of product function; urgent attention needed",
+                "4": "Immediate danger, safety issue, or critical harm"
+              }
+            },
+            "threshold": 3,
+            "accepted": false
+          },
+          {
+            "id": "churn_risk",
+            "decision": {
+              "type": "score",
+              "score": 4,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 0,
+                "3": 0,
+                "4": 1
+              },
+              "legend": {
+                "0": "No sign of leaving; satisfied or likely to buy again",
+                "1": "Minor dissatisfaction without any intent to leave",
+                "2": "Uncertain future purchase, regret, or substantial dissatisfaction",
+                "3": "Likely to stop using, return, switch, or avoid buying again",
+                "4": "Explicit decision to leave, switch brands, or never buy again"
+              }
+            },
+            "threshold": 3,
+            "accepted": true
+          },
+          {
+            "id": "escalation_need",
+            "decision": {
+              "type": "noul",
+              "noul": 1
+            },
+            "threshold": 0.75,
+            "accepted": true
+          }
+        ]
+      }
+    },
+    {
+      "raw": {
+        "model": "jev-1.13.0",
+        "answers": {
+          "camera_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "camera_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "battery_mentioned": {
+            "type": "noul",
+            "noul": 1
+          },
+          "battery_satisfaction": {
+            "type": "score",
+            "score": 0,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 1,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "display_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "display_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "design_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "design_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "performance_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "performance_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "build_quality_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "build_quality_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "value_for_money_mentioned": {
+            "type": "noul",
+            "noul": 0.2
+          },
+          "value_for_money_satisfaction": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "Very dissatisfied",
+              "1": "Dissatisfied",
+              "2": "Neutral / mixed",
+              "3": "Satisfied",
+              "4": "Very satisfied"
+            }
+          },
+          "overall_sentiment": {
+            "type": "choice",
+            "choice": "negative",
+            "confidence": 1,
+            "probabilities": {
+              "negative": 1,
+              "neutral": 0,
+              "positive": 0
+            }
+          },
+          "primary_topic": {
+            "type": "choice",
+            "choice": "battery",
+            "confidence": 1,
+            "probabilities": {
+              "camera": 0,
+              "battery": 1,
+              "display": 0,
+              "design": 0,
+              "performance": 0,
+              "build_quality": 0,
+              "value_for_money": 0,
+              "other": 0
+            }
+          },
+          "urgency": {
+            "type": "score",
+            "score": 2,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 0,
+              "1": 0,
+              "2": 1,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "No immediate action needed; general opinion or praise",
+              "1": "Minor inconvenience; can be handled routinely",
+              "2": "Meaningful problem; prompt follow-up is appropriate",
+              "3": "Time-sensitive or major loss of product function; urgent attention needed",
+              "4": "Immediate danger, safety issue, or critical harm"
+            }
+          },
+          "churn_risk": {
+            "type": "score",
+            "score": 0,
+            "confidence": 0.8,
+            "probabilities": {
+              "0": 1,
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0
+            },
+            "legend": {
+              "0": "No sign of leaving; satisfied or likely to buy again",
+              "1": "Minor dissatisfaction without any intent to leave",
+              "2": "Uncertain future purchase, regret, or substantial dissatisfaction",
+              "3": "Likely to stop using, return, switch, or avoid buying again",
+              "4": "Explicit decision to leave, switch brands, or never buy again"
+            }
+          },
+          "escalation_need": {
+            "type": "noul",
+            "noul": 0
+          }
+        },
+        "usage": {
+          "input_tokens": 100,
+          "output_tokens": 20
+        }
+      },
+      "review": {
+        "reviewId": "fixture-4",
+        "product": "Compatibility fixture",
+        "reviewText": "A deterministic battery review."
+      },
+      "expected": {
+        "requestId": "legacy-request",
+        "review": {
+          "reviewId": "fixture-4",
+          "product": "Compatibility fixture",
+          "reviewText": "A deterministic battery review."
+        },
+        "model": "jev-1.13.0",
+        "source": "jev",
+        "analyzedAt": "2026-10-02T00:00:00.000Z",
+        "durationMs": 120,
+        "decisionCount": 19,
+        "usage": {
+          "inputTokens": 100,
+          "outputTokens": 20
+        },
+        "aspects": [
+          {
+            "id": "camera",
+            "label": "Camera",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "battery",
+            "label": "Battery",
+            "mentionProbability": 1,
+            "mentioned": true,
+            "rating": 1,
+            "satisfactionLabel": "Very dissatisfied",
+            "confidence": 0.8
+          },
+          {
+            "id": "display",
+            "label": "Display",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "design",
+            "label": "Design",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "performance",
+            "label": "Performance",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "build_quality",
+            "label": "Build quality",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "value_for_money",
+            "label": "Value for money",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          }
+        ],
+        "signal": {
+          "sentiment": "negative",
+          "sentimentConfidence": 1,
+          "primaryTopic": "battery",
+          "topicConfidence": 1,
+          "urgency": 2,
+          "urgencyConfidence": 0.8,
+          "churnRisk": 0,
+          "churnConfidence": 0.8,
+          "escalationProbability": 0
+        },
+        "actions": [
+          {
+            "id": "escalate",
+            "label": "Escalate to a person",
+            "triggered": false,
+            "rule": "escalation_need >= 0.75",
+            "value": 0,
+            "threshold": 0.75
+          },
+          {
+            "id": "retention",
+            "label": "Retention follow-up",
+            "triggered": false,
+            "rule": "churn_risk >= 3 / 4",
+            "value": 0,
+            "threshold": 3
+          },
+          {
+            "id": "urgent",
+            "label": "Prioritize urgent review",
+            "triggered": false,
+            "rule": "urgency >= 3 / 4",
+            "value": 2,
+            "threshold": 3
+          }
+        ],
+        "traces": [
+          {
+            "id": "camera_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "camera_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "battery_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 1
+            },
+            "threshold": 0.5,
+            "accepted": true
+          },
+          {
+            "id": "battery_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 0,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 1,
+                "1": 0,
+                "2": 0,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": true,
+            "mappedRating": 1
+          },
+          {
+            "id": "display_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "display_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "design_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "design_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "performance_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "performance_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "build_quality_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "build_quality_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "value_for_money_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "value_for_money_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "overall_sentiment",
+            "decision": {
+              "type": "choice",
+              "choice": "negative",
+              "confidence": 1,
+              "probabilities": {
+                "negative": 1,
+                "neutral": 0,
+                "positive": 0
+              }
+            }
+          },
+          {
+            "id": "primary_topic",
+            "decision": {
+              "type": "choice",
+              "choice": "battery",
+              "confidence": 1,
+              "probabilities": {
+                "camera": 0,
+                "battery": 1,
+                "display": 0,
+                "design": 0,
+                "performance": 0,
+                "build_quality": 0,
+                "value_for_money": 0,
+                "other": 0
+              }
+            }
+          },
+          {
+            "id": "urgency",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "No immediate action needed; general opinion or praise",
+                "1": "Minor inconvenience; can be handled routinely",
+                "2": "Meaningful problem; prompt follow-up is appropriate",
+                "3": "Time-sensitive or major loss of product function; urgent attention needed",
+                "4": "Immediate danger, safety issue, or critical harm"
+              }
+            },
+            "threshold": 3,
+            "accepted": false
+          },
+          {
+            "id": "churn_risk",
+            "decision": {
+              "type": "score",
+              "score": 0,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 1,
+                "1": 0,
+                "2": 0,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "No sign of leaving; satisfied or likely to buy again",
+                "1": "Minor dissatisfaction without any intent to leave",
+                "2": "Uncertain future purchase, regret, or substantial dissatisfaction",
+                "3": "Likely to stop using, return, switch, or avoid buying again",
+                "4": "Explicit decision to leave, switch brands, or never buy again"
+              }
+            },
+            "threshold": 3,
+            "accepted": false
+          },
+          {
+            "id": "escalation_need",
+            "decision": {
+              "type": "noul",
+              "noul": 0
+            },
+            "threshold": 0.75,
+            "accepted": false
+          }
+        ]
+      }
+    }
+  ],
+  "aggregate": {
+    "successful": 5,
+    "failed": 1,
+    "totalDecisions": 95,
+    "sentimentCounts": {
+      "negative": 5,
+      "neutral": 0,
+      "positive": 0
+    },
+    "aspects": [
+      {
+        "id": "camera",
+        "label": "Camera",
+        "averageRating": null,
+        "mentionCount": 0,
+        "mentionPercent": 0
+      },
+      {
+        "id": "battery",
+        "label": "Battery",
+        "averageRating": 3.1666666666666665,
+        "mentionCount": 3,
+        "mentionPercent": 60
+      },
+      {
+        "id": "display",
+        "label": "Display",
+        "averageRating": null,
+        "mentionCount": 0,
+        "mentionPercent": 0
+      },
+      {
+        "id": "design",
+        "label": "Design",
+        "averageRating": null,
+        "mentionCount": 0,
+        "mentionPercent": 0
+      },
+      {
+        "id": "performance",
+        "label": "Performance",
+        "averageRating": null,
+        "mentionCount": 0,
+        "mentionPercent": 0
+      },
+      {
+        "id": "build_quality",
+        "label": "Build quality",
+        "averageRating": null,
+        "mentionCount": 0,
+        "mentionPercent": 0
+      },
+      {
+        "id": "value_for_money",
+        "label": "Value for money",
+        "averageRating": null,
+        "mentionCount": 0,
+        "mentionPercent": 0
+      }
+    ],
+    "weakestAspect": "Battery",
+    "strongestAspect": "Battery",
+    "highRiskCount": 2,
+    "escalationCount": 2
+  },
+  "agreements": [
+    {
+      "example": {
+        "id": "positive",
+        "name": "A strong recommendation",
+        "text": "I love this phone. The camera takes outstanding photos, the screen is bright and clear, and the battery comfortably lasts two days. Excellent value for the price. I would absolutely buy it again.",
+        "expected": {
+          "sentiment": "positive",
+          "mentioned": {
+            "camera": true,
+            "battery": true,
+            "display": true,
+            "value_for_money": true
+          }
+        }
+      },
+      "expected": {
+        "agreements": 0,
+        "assertions": 5
+      }
+    },
+    {
+      "example": {
+        "id": "battery",
+        "name": "Battery frustration",
+        "text": "The battery is terrible and barely survives half a day. Charging takes forever. I regret buying this phone and will switch to another brand.",
+        "expected": {
+          "sentiment": "negative",
+          "topic": "battery",
+          "mentioned": {
+            "battery": true,
+            "camera": false,
+            "display": false
+          }
+        }
+      },
+      "expected": {
+        "agreements": 4,
+        "assertions": 5
+      }
+    },
+    {
+      "example": {
+        "id": "mixed",
+        "name": "A mixed experience",
+        "text": "The battery barely lasts until evening and charging is painfully slow. Performance is smooth and the camera is fantastic for this price, but I would not buy this phone again because of the battery.",
+        "expected": {
+          "topic": "battery",
+          "mentioned": {
+            "battery": true,
+            "performance": true,
+            "camera": true
+          }
+        }
+      },
+      "expected": {
+        "agreements": 1,
+        "assertions": 4
+      }
+    },
+    {
+      "example": {
+        "id": "absent",
+        "name": "No product aspects",
+        "text": "I like the packaging.",
+        "expected": {
+          "topic": "other",
+          "mentioned": {
+            "battery": false,
+            "camera": false,
+            "display": false,
+            "performance": false,
+            "value_for_money": false
+          }
+        }
+      },
+      "expected": {
+        "agreements": 5,
+        "assertions": 6
+      }
+    },
+    {
+      "example": {
+        "id": "ambiguous",
+        "name": "Unclear feedback",
+        "text": "It is a phone. Some days I like it, other days I am not sure. I need more time with it.",
+        "expected": {
+          "sentiment": "neutral"
+        }
+      },
+      "expected": {
+        "agreements": 0,
+        "assertions": 1
+      }
+    },
+    {
+      "example": {
+        "id": "multiple",
+        "name": "Several product aspects",
+        "text": "The metal frame feels solid and the slim design fits my hand. Gaming is fast and the OLED display looks beautiful, but the photos are blurry at night.",
+        "expected": {
+          "mentioned": {
+            "build_quality": true,
+            "design": true,
+            "performance": true,
+            "display": true,
+            "camera": true
+          }
+        }
+      },
+      "expected": {
+        "agreements": 0,
+        "assertions": 5
+      }
+    },
+    {
+      "example": {
+        "id": "escalation",
+        "name": "A customer at risk",
+        "text": "My phone battery swelled and the back casing came apart. I stopped using it. Support has ignored me for a week. I need a replacement immediately and I will never buy from this company again.",
+        "expected": {
+          "sentiment": "negative",
+          "mentioned": {
+            "battery": true,
+            "build_quality": true
+          }
+        }
+      },
+      "expected": {
+        "agreements": 1,
+        "assertions": 3
+      }
+    }
+  ],
+  "apiCases": [
+    {
+      "path": "/api/health",
+      "method": "GET",
+      "status": 200,
+      "expected": {
+        "status": "ok",
+        "jevConfigured": true,
+        "model": "jev-1.13.0",
+        "decisionCount": 19,
+        "limits": {
+          "maxReviews": 50,
+          "concurrency": 2,
+          "maxCharacters": 8000
+        },
+        "baselineConfigured": false
+      }
+    },
+    {
+      "path": "/api/analyze",
+      "method": "POST",
+      "body": {
+        "reviewText": "Good battery"
+      },
+      "status": 200,
+      "expected": {
+        "requestId": "22873e2c-8329-4aae-b346-a6b49c766291",
+        "review": {
+          "reviewId": "22873e2c-8329-4aae-b346-a6b49c766291",
+          "product": "Customer feedback",
+          "reviewText": "Good battery"
+        },
+        "model": "jev-1.13.0",
+        "source": "jev",
+        "analyzedAt": "2026-10-02T00:00:00.000Z",
+        "durationMs": 120,
+        "decisionCount": 19,
+        "usage": {
+          "inputTokens": 100,
+          "outputTokens": 20
+        },
+        "aspects": [
+          {
+            "id": "camera",
+            "label": "Camera",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "battery",
+            "label": "Battery",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "display",
+            "label": "Display",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "design",
+            "label": "Design",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "performance",
+            "label": "Performance",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "build_quality",
+            "label": "Build quality",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          },
+          {
+            "id": "value_for_money",
+            "label": "Value for money",
+            "mentionProbability": 0.2,
+            "mentioned": false,
+            "rating": null,
+            "satisfactionLabel": null,
+            "confidence": null
+          }
+        ],
+        "signal": {
+          "sentiment": "negative",
+          "sentimentConfidence": 1,
+          "primaryTopic": "battery",
+          "topicConfidence": 1,
+          "urgency": 2,
+          "urgencyConfidence": 0.8,
+          "churnRisk": 2,
+          "churnConfidence": 0.8,
+          "escalationProbability": 0.2
+        },
+        "actions": [
+          {
+            "id": "escalate",
+            "label": "Escalate to a person",
+            "triggered": false,
+            "rule": "escalation_need >= 0.75",
+            "value": 0.2,
+            "threshold": 0.75
+          },
+          {
+            "id": "retention",
+            "label": "Retention follow-up",
+            "triggered": false,
+            "rule": "churn_risk >= 3 / 4",
+            "value": 2,
+            "threshold": 3
+          },
+          {
+            "id": "urgent",
+            "label": "Prioritize urgent review",
+            "triggered": false,
+            "rule": "urgency >= 3 / 4",
+            "value": 2,
+            "threshold": 3
+          }
+        ],
+        "traces": [
+          {
+            "id": "camera_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "camera_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "battery_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "battery_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "display_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "display_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "design_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "design_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "performance_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "performance_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "build_quality_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "build_quality_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "value_for_money_mentioned",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.5,
+            "accepted": false
+          },
+          {
+            "id": "value_for_money_satisfaction",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "Very dissatisfied",
+                "1": "Dissatisfied",
+                "2": "Neutral / mixed",
+                "3": "Satisfied",
+                "4": "Very satisfied"
+              }
+            },
+            "accepted": false
+          },
+          {
+            "id": "overall_sentiment",
+            "decision": {
+              "type": "choice",
+              "choice": "negative",
+              "confidence": 1,
+              "probabilities": {
+                "negative": 1,
+                "neutral": 0,
+                "positive": 0
+              }
+            }
+          },
+          {
+            "id": "primary_topic",
+            "decision": {
+              "type": "choice",
+              "choice": "battery",
+              "confidence": 1,
+              "probabilities": {
+                "camera": 0,
+                "battery": 1,
+                "display": 0,
+                "design": 0,
+                "performance": 0,
+                "build_quality": 0,
+                "value_for_money": 0,
+                "other": 0
+              }
+            }
+          },
+          {
+            "id": "urgency",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "No immediate action needed; general opinion or praise",
+                "1": "Minor inconvenience; can be handled routinely",
+                "2": "Meaningful problem; prompt follow-up is appropriate",
+                "3": "Time-sensitive or major loss of product function; urgent attention needed",
+                "4": "Immediate danger, safety issue, or critical harm"
+              }
+            },
+            "threshold": 3,
+            "accepted": false
+          },
+          {
+            "id": "churn_risk",
+            "decision": {
+              "type": "score",
+              "score": 2,
+              "confidence": 0.8,
+              "probabilities": {
+                "0": 0,
+                "1": 0,
+                "2": 1,
+                "3": 0,
+                "4": 0
+              },
+              "legend": {
+                "0": "No sign of leaving; satisfied or likely to buy again",
+                "1": "Minor dissatisfaction without any intent to leave",
+                "2": "Uncertain future purchase, regret, or substantial dissatisfaction",
+                "3": "Likely to stop using, return, switch, or avoid buying again",
+                "4": "Explicit decision to leave, switch brands, or never buy again"
+              }
+            },
+            "threshold": 3,
+            "accepted": false
+          },
+          {
+            "id": "escalation_need",
+            "decision": {
+              "type": "noul",
+              "noul": 0.2
+            },
+            "threshold": 0.75,
+            "accepted": false
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/analyze",
+      "method": "POST",
+      "body": {
+        "reviewText": ""
+      },
+      "status": 400,
+      "expected": {
+        "error": {
+          "code": "INVALID_INPUT",
+          "message": "Enter customer feedback before analyzing.",
+          "requestId": "e49ad9e8-b7cc-4a48-a697-fa78f24afc4a"
+        }
+      }
+    },
+    {
+      "path": "/api/analyze",
+      "method": "POST",
+      "body": {
+        "reviewText": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      },
+      "status": 400,
+      "expected": {
+        "error": {
+          "code": "INVALID_INPUT",
+          "message": "Feedback must be 8,000 characters or fewer.",
+          "requestId": "459da0f9-5247-4d2c-8654-b57a33636e1c"
+        }
+      }
+    },
+    {
+      "path": "/api/analyze",
+      "method": "POST",
+      "body": {
+        "reviewText": "Good",
+        "extra": true
+      },
+      "status": 400,
+      "expected": {
+        "error": {
+          "code": "INVALID_INPUT",
+          "message": "Unrecognized key: \"extra\"",
+          "requestId": "3bc5b3bd-8224-4fb7-8d3e-19daf799e470"
+        }
+      }
+    },
+    {
+      "path": "/api/batch",
+      "method": "POST",
+      "body": {
+        "reviews": []
+      },
+      "status": 400,
+      "expected": {
+        "error": {
+          "code": "INVALID_INPUT",
+          "message": "Too small: expected array to have >=1 items",
+          "requestId": "e87dd069-4c7e-4e9f-bb60-58c8a44e9215"
+        }
+      }
+    },
+    {
+      "path": "/api/batch",
+      "method": "POST",
+      "body": {
+        "reviews": [
+          {
+            "reviewId": "fixture-0",
+            "product": "Compatibility fixture",
+            "reviewText": "A deterministic battery review."
+          },
+          {
+            "reviewId": "fixture-0",
+            "product": "Compatibility fixture",
+            "reviewText": "A deterministic battery review."
+          }
+        ]
+      },
+      "status": 400,
+      "expected": {
+        "error": {
+          "code": "INVALID_INPUT",
+          "message": "Review IDs must be unique.",
+          "requestId": "0fedc582-625b-4e1d-ab96-c0fb79484a31"
+        }
+      }
+    },
+    {
+      "path": "/api/benchmark",
+      "method": "POST",
+      "body": {
+        "exampleIds": ["mixed", "mixed"]
+      },
+      "status": 400,
+      "expected": {
+        "error": {
+          "code": "INVALID_INPUT",
+          "message": "Choose each evaluation example only once.",
+          "requestId": "c2dad47b-2645-4bf2-8c81-1ab739d7aa14"
+        }
+      }
+    },
+    {
+      "path": "/api/benchmark",
+      "method": "POST",
+      "body": {
+        "exampleIds": ["unknown"]
+      },
+      "status": 400,
+      "expected": {
+        "error": {
+          "code": "INVALID_INPUT",
+          "message": "Select examples from the evaluation fixture.",
+          "requestId": "1f2fc119-f0db-469a-b247-3bb14e113e8d"
+        }
+      }
+    }
+  ]
+}

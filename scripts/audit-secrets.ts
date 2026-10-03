@@ -13,7 +13,7 @@ const publishable = execFileSync(
   { encoding: 'utf8' },
 )
   .split('\0')
-  .filter(Boolean);
+  .filter((path) => path && existsSync(path));
 const violations = new Set<string>();
 for (const path of tracked) {
   if (

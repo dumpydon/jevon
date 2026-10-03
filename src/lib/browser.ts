@@ -7,6 +7,10 @@ import type {
   ReviewInput,
 } from './types';
 
+// Only a public backend URL is exposed. Local development uses the Vite /api proxy.
+const apiBase = (import.meta.env.VITE_API_BASE_URL ?? '').replace(/\/+$/, '');
+const apiUrl = (path: string) => `${apiBase}${path}`;
+
 export class RequestError extends Error {
   readonly code: string;
   readonly requestId?: string;
@@ -55,7 +59,7 @@ async function checkResponse(response: Response): Promise<void> {
 }
 
 async function request<T>(url: string, data?: unknown, signal?: AbortSignal): Promise<T> {
-  const response = await fetch(url, {
+  const response = await fetch(apiUrl(url), {
     method: data ? 'POST' : 'GET',
     headers: data ? { 'Content-Type': 'application/json' } : undefined,
     body: data ? JSON.stringify(data) : undefined,
@@ -77,7 +81,7 @@ export async function analyzeBatch(
   onEvent: (event: BatchEvent) => void,
   signal: AbortSignal,
 ): Promise<void> {
-  const response = await fetch('/api/batch', {
+  const response = await fetch(apiUrl('/api/batch'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ reviews }),

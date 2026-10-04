@@ -3955,13 +3955,6 @@ td {
     opacity 160ms ease-out,
     transform 160ms ease-out;
 }
-.point-cloud-cube::before {
-  content: '';
-  position: absolute;
-  inset: 28px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse, var(--accent-subtle), transparent 70%);
-}
 .point-cloud-cube canvas {
   position: relative;
   display: block;

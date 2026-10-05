@@ -35,9 +35,9 @@ function generateCubeSurfacePoints(): CloudPoint[] {
         const pz = (z / divisions) * 2 - 1;
         const nearSeam = (index: number) => Math.abs(index - divisions / 2) === 0.5;
         const boundary =
-          (nearSeam(x) && (py < 0) !== (pz < 0)) ||
-          (nearSeam(y) && (px < 0) !== (pz < 0)) ||
-          (nearSeam(z) && (px < 0) !== (py < 0));
+          (nearSeam(x) && py < 0 !== pz < 0) ||
+          (nearSeam(y) && px < 0 !== pz < 0) ||
+          (nearSeam(z) && px < 0 !== py < 0);
         points.push({
           x: px,
           y: py,

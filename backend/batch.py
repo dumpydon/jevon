@@ -102,12 +102,15 @@ async def batch_events(
                     "total": len(reviews),
                     "item": browser_json(item),
                 }
-                if (
-                    not fatal
-                    and next_index < len(reviews)
-                    and not (cancel and cancel.is_set())
-                ):
-                    schedule()
+            # Inspect every completed task before refilling slots. A success must
+            # not schedule another paid call ahead of a simultaneous fatal error.
+            while (
+                not fatal
+                and len(pending) < CONCURRENCY
+                and next_index < len(reviews)
+                and not (cancel and cancel.is_set())
+            ):
+                schedule()
         if fatal and not (cancel and cancel.is_set()):
             for index, item in enumerate(items):
                 if item is None:

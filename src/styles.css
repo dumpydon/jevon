@@ -590,60 +590,6 @@ textarea:focus {
   flex-direction: column;
   align-items: center;
 }
-.visual-node {
-  display: grid;
-  place-items: center;
-  color: var(--accent);
-  width: 45px;
-  height: 45px;
-  border: 1px solid var(--accent-border);
-  border-radius: 8px;
-  background: var(--accent-subtle);
-  box-shadow: 0 0 0 5px var(--surface-elevated);
-}
-.connector-line {
-  height: 22px;
-  width: 1px;
-  background: var(--accent-border);
-}
-.visual-decisions {
-  display: flex;
-  gap: 10px;
-}
-.visual-decisions > span {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 13px;
-  font-weight: 500;
-  display: grid;
-  place-items: center;
-  width: 35px;
-  height: 29px;
-  border: 1px solid var(--accent-border);
-  border-radius: 4px;
-  color: var(--accent);
-  background: var(--accent-subtle);
-}
-.visual-signal {
-  display: flex;
-  gap: 4px;
-  align-items: flex-end;
-  height: 25px;
-  padding: 0 8px;
-}
-.visual-signal > span {
-  background: var(--accent-dim);
-  width: 8px;
-  border-radius: 2px 2px 0 0;
-  height: 12px;
-}
-.visual-signal > span:nth-child(2) {
-  height: 23px;
-  background: var(--accent);
-}
-.visual-signal > span:nth-child(3) {
-  height: 17px;
-  background: var(--accent-soft);
-}
 .placeholder-copy {
   text-align: center;
   padding: 0 35px;

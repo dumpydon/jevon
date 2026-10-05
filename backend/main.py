@@ -213,12 +213,19 @@ async def jev_failure(request: Request, error: JevError):
 
 @app.exception_handler(HTTPException)
 async def route_failure(request: Request, error: HTTPException):
-    return error_response(
-        "NOT_FOUND",
-        "API route not found.",
+    code, message = {
+        400: ("INVALID_JSON", "The request must contain valid JSON."),
+        404: ("NOT_FOUND", "API route not found."),
+        405: ("METHOD_NOT_ALLOWED", "This API route does not support that method."),
+    }.get(error.status_code, ("HTTP_ERROR", "The request could not be completed."))
+    response = error_response(
+        code,
+        message,
         getattr(request.state, "request_id", ""),
-        404,
+        error.status_code,
     )
+    response.headers.update(error.headers or {})
+    return response
 
 
 @app.exception_handler(Exception)

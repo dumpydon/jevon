@@ -45,15 +45,33 @@ The browser continues calling `/api/*` locally through Vite's proxy to port 8000
 
 ## Decision model
 
+There are **19 typed decisions = 8 Noul + 9 Score + 2 Choice**. Noul expresses a yes/no judgment as a probability; Score expresses a probability-weighted value on an ordered semantic rubric; Choice selects a categorical option.
+
 This build pins the official **`typesafe-sdk==0.7.2`** package (`typesafe_sdk`) and requests **`jev-1.13.0`**. Each review uses `AsyncTypeSafeClient.system_one(state=..., questions=...)` with `Noul`, `Score` and `Choice` definitions over one shared state. The installed async SDK and raw response types were inspected against the [official Python SDK documentation](https://docs.typesafe.ai/sdk/python/usage) and [async client reference](https://docs.typesafe.ai/sdk/python/api/clients/async).
 
-| Primitive  | Questions                                           | Returned information                                                   |
-| ---------- | --------------------------------------------------- | ---------------------------------------------------------------------- |
-| `noul()`   | 7 aspect mentions + escalation need                 | Probability of yes, from 0 to 1                                        |
-| `score()`  | 7 aspect satisfaction scores + urgency + churn risk | Probability-weighted score, confidence, distribution and rubric legend |
-| `choice()` | Overall sentiment + primary topic                   | Selected label, confidence and full option distribution                |
+| Primitive | Questions                                           | Returned information                                                   |
+| --------- | --------------------------------------------------- | ---------------------------------------------------------------------- |
+| `Noul`    | 7 aspect mentions + escalation need                 | Probability of yes, from 0 to 1                                        |
+| `Score`   | 7 aspect satisfaction scores + urgency + churn risk | Probability-weighted score, confidence, distribution and rubric legend |
+| `Choice`  | Overall sentiment + primary topic                   | Selected label, confidence and full option distribution                |
 
 The seven aspects are Camera, Battery, Display, Design, Performance, Build Quality, and Value for Money. All questions evaluate the same review text; answers do not trigger further model calls.
+
+The canonical IDs in `backend/jev.py` are:
+
+| Noul (8)                    | Score (9)                      | Choice (2)          |
+| --------------------------- | ------------------------------ | ------------------- |
+| `camera_mentioned`          | `camera_satisfaction`          | `overall_sentiment` |
+| `battery_mentioned`         | `battery_satisfaction`         | `primary_topic`     |
+| `display_mentioned`         | `display_satisfaction`         |                     |
+| `design_mentioned`          | `design_satisfaction`          |                     |
+| `performance_mentioned`     | `performance_satisfaction`     |                     |
+| `build_quality_mentioned`   | `build_quality_satisfaction`   |                     |
+| `value_for_money_mentioned` | `value_for_money_satisfaction` |                     |
+| `escalation_need`           | `urgency`                      |                     |
+|                             | `churn_risk`                   |                     |
+
+Sentiment choices are `negative`, `neutral`, and `positive`. Topic choices are the seven aspect IDs plus `other`. Missing, unknown, or inconsistent upstream choices are rejected as malformed responses; the app does not invent a replacement label.
 
 Satisfaction uses five ordered Jev rubric levels. A Score can be fractional; the app preserves that precision and adds 1 to present a 1–5 rating. The nearby satisfaction label uses the nearest rubric level.
 
@@ -193,6 +211,8 @@ This submits one review with 19 questions, using the mixed example by default an
 
 [CI](.github/workflows/ci.yml) installs both dependency sets, runs pytest and Python compilation, frontend tests, typecheck, lint, formatting, build, secret audit and the static-assets dry run. Paid inference and deployment are excluded. See [local migration verification](docs/verification.md) for observed evidence.
 
+The [final QC report](docs/qc.md) records the subsequent contract, browser, security, and deployment-readiness checks.
+
 ## Deployment
 
 The intended split is a static **Cloudflare frontend** plus a native **Render Python web service**. `wrangler.jsonc` now contains only static assets and the SPA fallback. There is no backend Worker, TypeSafe secret binding or inference rate-limit binding on Cloudflare.
@@ -208,7 +228,7 @@ After deployment is explicitly authorized, configure a Render web service for th
 | Health-check path | `/api/health`                                                                      |
 | Environment       | `TYPESAFE_API_KEY`, `FRONTEND_ORIGIN` set to the actual Cloudflare frontend origin |
 
-Use the tested Python 3.14 runtime. These commands follow [Render's FastAPI setup](https://render.com/docs/deploy-fastapi); the existing requirements file supplies the runtime dependencies. Keep the TypeSafe key in Render's server environment.
+Set `PYTHON_VERSION=3.14.3` on Render to select the tested runtime explicitly, following [Render's Python version configuration](https://render.com/docs/python-version). The commands above follow [Render's FastAPI setup](https://render.com/docs/deploy-fastapi); the existing requirements file supplies the runtime dependencies. Keep the TypeSafe key in Render's server environment.
 
 Build the frontend with the actual public backend URL:
 

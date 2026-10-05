@@ -2,6 +2,8 @@
 
 AI Decision Engine for Customer Feedback. Turn customer reviews into typed, confidence-aware operational decisions with TypeSafe's Jev model.
 
+[Open Jevon](https://jevon.dumpydon.workers.dev) · [Production API health](https://jevon-api.onrender.com/api/health)
+
 ![Jevon Decision Lab](public/preview.jpg)
 
 ## Why Jevon
@@ -215,9 +217,9 @@ The [final QC report](docs/qc.md) records the subsequent contract, browser, secu
 
 ## Deployment
 
-The intended split is a static **Cloudflare frontend** plus a native **Render Python web service**. `wrangler.jsonc` now contains only static assets and the SPA fallback. There is no backend Worker, TypeSafe secret binding or inference rate-limit binding on Cloudflare.
+Production uses a **Cloudflare Workers Static Assets frontend** at [jevon.dumpydon.workers.dev](https://jevon.dumpydon.workers.dev) and a **Render Python web service** at [jevon-api.onrender.com](https://jevon-api.onrender.com/api/health). `wrangler.jsonc` contains only static assets and the SPA fallback. TypeSafe inference and its credential remain on Render.
 
-After deployment is explicitly authorized, configure a Render web service for this repository with:
+The Render service `jevon-api` uses the **Free** plan in Singapore and the following configuration:
 
 | Setting           | Value                                                                              |
 | ----------------- | ---------------------------------------------------------------------------------- |
@@ -228,18 +230,18 @@ After deployment is explicitly authorized, configure a Render web service for th
 | Health-check path | `/api/health`                                                                      |
 | Environment       | `TYPESAFE_API_KEY`, `FRONTEND_ORIGIN` set to the actual Cloudflare frontend origin |
 
-Set `PYTHON_VERSION=3.14.3` on Render to select the tested runtime explicitly, following [Render's Python version configuration](https://render.com/docs/python-version). The commands above follow [Render's FastAPI setup](https://render.com/docs/deploy-fastapi); the existing requirements file supplies the runtime dependencies. Keep the TypeSafe key in Render's server environment.
+`PYTHON_VERSION` selects the tested Python 3.14.3 runtime, also recorded in `backend/.python-version`. The commands above follow [Render's FastAPI setup](https://render.com/docs/deploy-fastapi). `TYPESAFE_API_KEY` is stored only in Render's server environment; `FRONTEND_ORIGIN` allows the exact production Cloudflare origin without wildcard origins or cookies.
 
-Build the frontend with the actual public backend URL:
+Both services are connected to **`dumpydon/jevon`, branch `main`**, using native Git deployment:
 
-```sh
-VITE_API_BASE_URL=https://your-backend.onrender.com npm run build
-WRANGLER_SEND_METRICS=false npx wrangler deploy --dry-run
-```
+- **Render:** auto-deploy on commit; root `backend`, so backend changes trigger rebuilding the API.
+- **Cloudflare Worker `jevon`:** Workers Builds watches `main`, builds with `npm ci && npm run build`, then publishes with `npx wrangler deploy`. The build runs from the repository root, uses Node 22, and watches all paths. Non-production preview builds are disabled. No additional deployment workflow or deploy hook is required.
 
-Cloudflare supports [static-assets deployments](https://developers.cloudflare.com/workers/static-assets/get-started/) without a custom backend script. A dry run validates local assets; it does not publish. When authorized, deploy that same build with `npx wrangler deploy` in the intended account. Rebuilding later requires the same public API URL.
+Cloudflare's build environment supplies the public `VITE_API_BASE_URL` for Render and `NODE_VERSION`. These are build settings, not runtime secret bindings. The existing GitHub Actions workflow continues running QC independently of the native deployments.
 
-The production static frontend does not proxy `/api`; `VITE_API_BASE_URL` is required there. Confirm the actual frontend origin in Render CORS, then verify health and a deliberate small analysis. Account setup, production CORS, public URLs and deployments remain pending; no deployment was performed during this migration.
+For an explicitly authorized manual frontend redeploy, build with the production `VITE_API_BASE_URL` in the environment before running `npm run deploy`. A build without it is for local development and will not reach the hosted API. `npm run deploy:check` performs a dry run without publishing.
+
+Render Free instances can spin down while idle. The first request after inactivity may take longer; Jevon's header shows Connecting while its health request waits. Inference still consumes TypeSafe/Jev account credit. No paid Render instance, database, or additional infrastructure is used.
 
 ## CampusX inspiration
 
@@ -252,7 +254,7 @@ The initial seven-aspect mention/satisfaction pattern was inspired by [CampusX's
 - Results/history are held in browser memory and are lost on refresh. There is no durable job queue; leaving the page may cancel unfinished work.
 - Two-task concurrency is a per-request limit. Concurrent visitors can create more than two provider calls overall; the app does not impose a global spend cap.
 - The UI displays provider confidence without a calibration study. Model behavior and the SDK/API can evolve even when application thresholds remain fixed.
-- Local FastAPI inference and the frontend static-assets dry run passed; public deployment, server-side secrets and final URLs still require authorized account configuration.
+- Public deployment uses the URLs and native Git settings above. Availability and initial latency remain subject to Render Free cold starts and the external Jev service.
 
 ## License
 

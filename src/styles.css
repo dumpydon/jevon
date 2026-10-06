@@ -3891,6 +3891,75 @@ td {
   }
 }
 
+/* Reserve the compact status area so readiness never shifts the workspace. */
+.backend-status {
+  width: 268px;
+  min-height: 42px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+}
+.backend-status > .connection-indicator:only-child {
+  align-self: flex-end;
+}
+.cold-start-copy {
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 14px;
+}
+.cold-start-track {
+  position: relative;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--border);
+}
+.cold-start-track::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 30%;
+  background: var(--accent);
+  box-shadow: 0 0 5px var(--accent-glow);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .cold-start-track::after {
+    background: linear-gradient(90deg, transparent, var(--accent));
+    animation: cold-start-trail 1.8s ease-in-out infinite;
+  }
+}
+@keyframes cold-start-trail {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(334%);
+  }
+}
+@media (max-width: 820px) {
+  .topbar {
+    height: 56px;
+  }
+}
+@media (max-width: 660px) {
+  .backend-status {
+    width: 180px;
+    min-height: 46px;
+    gap: 2px;
+  }
+  .cold-start-copy {
+    font-size: 11px;
+    line-height: 12px;
+  }
+}
+@media (max-width: 420px) {
+  .topbar .breadcrumb > span,
+  .topbar .breadcrumb > svg {
+    display: none;
+  }
+}
+
 /* A decorative computational object, confined to the existing empty-state illustration. */
 .point-cloud-cube {
   position: relative;

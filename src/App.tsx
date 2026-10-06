@@ -10,7 +10,7 @@ import {
   X,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { getHealth } from './lib/browser';
+import { activateWarmWindow, waitForHealth } from './lib/connection';
 import { JEV_MODEL } from './lib/config';
 import type { HealthStatus } from './lib/types';
 import { AppFooter } from './components/AppFooter';
@@ -57,7 +57,8 @@ export default function App() {
   const [healthFailed, setHealthFailed] = useState(false);
   useEffect(() => {
     const controller = new AbortController();
-    getHealth(controller.signal)
+    void activateWarmWindow();
+    waitForHealth(controller.signal)
       .then(setHealth)
       .catch(() => {
         if (!controller.signal.aborted) setHealthFailed(true);
@@ -195,22 +196,31 @@ export default function App() {
             <strong>{navigation.find((item) => item.id === page)?.label}</strong>
           </div>
           <div className="topbar-right">
-            <span
-              className={`connection-indicator ${health?.jevConfigured ? 'connected' : ''}`}
-              title={health?.model ?? JEV_MODEL}
-              role="status"
-            >
+            <div className="backend-status" role="status" aria-live="polite">
               <span
-                className={`status-dot ${healthFailed || (health && !health.jevConfigured) ? 'status-warning' : !health ? 'status-pending' : ''}`}
-              />
-              {health?.jevConfigured
-                ? 'Jev API Ready'
-                : health
-                  ? 'Needs configuration'
-                  : healthFailed
-                    ? 'Offline'
-                    : 'Connecting'}
-            </span>
+                className={`connection-indicator ${health?.jevConfigured ? 'connected' : ''}`}
+                title={health?.model ?? JEV_MODEL}
+              >
+                <span
+                  className={`status-dot ${healthFailed || (health && !health.jevConfigured) ? 'status-warning' : !health ? 'status-pending' : ''}`}
+                />
+                {health?.jevConfigured
+                  ? 'Jevon API Ready'
+                  : health
+                    ? 'Needs configuration'
+                    : healthFailed
+                      ? 'Offline'
+                      : 'Backend is waking up'}
+              </span>
+              {!health && !healthFailed && (
+                <>
+                  <span className="cold-start-copy">
+                    Cold start — this may take up to 60 seconds.
+                  </span>
+                  <span className="cold-start-track" aria-hidden="true" />
+                </>
+              )}
+            </div>
           </div>
         </div>
         <main id="main-content" className="main-content" tabIndex={-1}>

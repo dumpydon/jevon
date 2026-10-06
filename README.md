@@ -31,7 +31,7 @@ flowchart LR
   R --> UI
 ```
 
-Jevon intentionally stays small: five backend modules, ordinary Python functions and bounded asyncio tasks. No database, persistence, job infrastructure or extra model provider. The interesting part is the typed Jev decisions and the rules that consume them.
+Jevon intentionally stays small: five backend modules, ordinary Python functions and bounded asyncio tasks. No database, job infrastructure or extra model provider. The interesting part is the typed Jev decisions and the rules that consume them. Cloudflare KV stores only a single optional backend warm-lease expiry; review results are not persisted.
 
 | Module                 | Responsibility                                                                                   |
 | ---------------------- | ------------------------------------------------------------------------------------------------ |
@@ -217,7 +217,7 @@ The [final QC report](docs/qc.md) records the subsequent contract, browser, secu
 
 ## Deployment
 
-Production uses a **Cloudflare Workers Static Assets frontend** at [jevon.dumpydon.workers.dev](https://jevon.dumpydon.workers.dev) and a **Render Python web service** at [jevon-api.onrender.com](https://jevon-api.onrender.com/api/health). `wrangler.jsonc` contains only static assets and the SPA fallback. TypeSafe inference and its credential remain on Render.
+Production uses a **Cloudflare Workers Static Assets frontend** at [jevon.dumpydon.workers.dev](https://jevon.dumpydon.workers.dev) and a **Render Python web service** at [jevon-api.onrender.com](https://jevon-api.onrender.com/api/health). `wrangler.jsonc` preserves static assets and the SPA fallback, and configures the same Worker's warm-lease handler, KV binding and cron. TypeSafe inference and its credential remain on Render.
 
 The Render service `jevon-api` uses the **Free** plan in Singapore and the following configuration:
 
@@ -237,11 +237,13 @@ Both services are connected to **`dumpydon/jevon`, branch `main`**, using native
 - **Render:** auto-deploy on commit; root `backend`, so backend changes trigger rebuilding the API.
 - **Cloudflare Worker `jevon`:** Workers Builds watches `main`, builds with `npm ci && npm run build`, then publishes with `npx wrangler deploy`. The build runs from the repository root, uses Node 22, and watches all paths. Non-production preview builds are disabled. No additional deployment workflow or deploy hook is required.
 
-Cloudflare's build environment supplies the public `VITE_API_BASE_URL` for Render and `NODE_VERSION`. These are build settings, not runtime secret bindings. The existing GitHub Actions workflow continues running QC independently of the native deployments.
+Cloudflare's build environment supplies the public `VITE_API_BASE_URL` for Render and `NODE_VERSION`. The same public API base is supplied to the scheduled Worker in Wrangler's `vars`; it is not a secret. The existing GitHub Actions workflow continues running QC independently of the native deployments.
 
 For an explicitly authorized manual frontend redeploy, build with the production `VITE_API_BASE_URL` in the environment before running `npm run deploy`. A build without it is for local development and will not reach the hosted API. `npm run deploy:check` performs a dry run without publishing.
 
-Render Free instances can spin down while idle. The first request after inactivity may take longer; Jevon's header shows Connecting while its health request waits. Inference still consumes TypeSafe/Jev account credit. No paid Render instance, database, or additional infrastructure is used.
+Render Free instances can spin down while idle. On opening Jevon, the browser starts bounded health polling and best-effort `POST /api/warm/activate`. The same Worker stores `render_warm_until` in `JEVON_STATE`: a missing/expired lease becomes now + **3 hours**, while an active expiry is returned unchanged. Revisits do not slide the window. Cron `*/10 * * * *` sends only `GET /api/health` while the lease is active, with an 8-second timeout and no retry; expired leases cause no request. Keepalive uses **no Jev inference**. KV is eventually consistent, so simultaneous first activations in different regions can race; this small optimization is best-effort rather than a transactional lock. [Cloudflare documents KV's concurrency limits](https://developers.cloudflare.com/kv/api/write-key-value-pairs/#concurrent-writes-to-the-same-key).
+
+During cold start the header shows **Backend is waking up** and **Cold start — this may take up to 60 seconds.** Health attempts are serial, bounded to 10 seconds each, spaced 3 seconds apart after failure, and stop on success, unmount or the 60-second overall deadline. Activation/KV/cron failure never blocks ordinary API use. For local Worker testing, use `CLOUDFLARE_LOAD_DEV_VARS_FROM_DOT_ENV=false wrangler dev` to avoid loading the backend's `.env.local`; `GET /cdn-cgi/local/scheduled?format=json&cron=*/10+*+*+*+*` invokes the cron handler against separate local KV. Inference still consumes TypeSafe/Jev account credit. Render configuration is unchanged.
 
 ## CampusX inspiration
 
